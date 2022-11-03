@@ -2,7 +2,7 @@
 #include <cmath>
 #include "Utils.h"
 
-bool isEqual(float a, float b) {
+bool isEqualf(float a, float b) {
 	//OutputDebugString(L"Hello");
 	//_ASSERT(true);
 	return abs(a - b) < EPSILON;

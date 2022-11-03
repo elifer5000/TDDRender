@@ -9,7 +9,7 @@
 
 #define EPSILON 0.00001f
 
-CLASS_DECLSPEC bool isEqual(float a, float b);
+CLASS_DECLSPEC bool isEqualf(float a, float b);
 
 /**
 * Returns:
