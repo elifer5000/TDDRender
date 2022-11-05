@@ -1,12 +1,7 @@
 #pragma once
-#include <memory>
+//#include <memory> // needed for new
 #include <iostream>
-
-#ifdef BASICMATH_EXPORTS
-#define CLASS_DECLSPEC    __declspec(dllexport)
-#else
-#define CLASS_DECLSPEC    __declspec(dllimport)
-#endif
+#include "Export.h"
 
 class CLASS_DECLSPEC Tuple {
 public:
@@ -15,7 +10,7 @@ public:
 	float z;
 	float w;
 
-	Tuple(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) {}
+	Tuple(float _x = 0.f, float _y = 0.f, float _z = 0.f, float _w = 0.f) : x(_x), y(_y), z(_z), w(_w) {}
 	Tuple(const Tuple& tuple) {
 		x = tuple.x;
 		y = tuple.y;
@@ -26,8 +21,8 @@ public:
 		/*std::cout << "Tuple destroyed" << std::endl;*/
 	}
 	
-	bool isPoint() { return w == 1.0f; }
-	bool isVector() { return w == 0.0f; }
+	bool isPoint() const { return w == 1.0f; }
+	bool isVector() const { return w == 0.0f; }
 
 	Tuple operator+(const Tuple& rhs) {
 		Tuple tmp(*this);
@@ -61,13 +56,31 @@ public:
 		return *this;
 	}
 
-	// Negation overload
-	//Tuple& operator-() {
-	//	Tuple tmp(*this);
-	//	tmp.negate();
+	Tuple& operator*=(float scalar) {
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
+		w *= scalar;
 
-	//	return tmp;
-	//}
+		return *this;
+	}
+
+	Tuple& operator/=(float scalar) {
+		x /= scalar;
+		y /= scalar;
+		z /= scalar;
+		w /= scalar;
+
+		return *this;
+	}
+
+	// Negation overload
+	Tuple operator-() {
+		Tuple tmp(*this);
+		tmp.negate();
+
+		return tmp;
+	}
 
 	// Self negation
 	Tuple& negate() {
@@ -79,7 +92,50 @@ public:
 		return *this;
 	}
 
-	bool isEqual(const Tuple& rhs);
+	Tuple operator*(float scalar) {
+		Tuple tmp(*this);
+		tmp *= scalar;
+
+		return tmp;
+	}
+
+	Tuple operator/(float scalar) {
+		Tuple tmp(*this);
+		tmp /= scalar;
+
+		return tmp;
+	}
+
+	float magnitude() const {
+		return sqrt(x * x + y * y + z * z + w * w);
+	}
+
+	Tuple& normalize() {
+		auto len = magnitude();
+		
+		if (len > 0) {
+			x /= len;
+			y /= len;
+			z /= len;
+			w /= len;
+		}
+
+		return *this;
+	}
+
+	float dot(const Tuple& rhs) const {
+		return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
+	}
+
+	Tuple cross(const Tuple& rhs) const {
+		Tuple tmp = CreateVector(y * rhs.z - z * rhs.y,
+			z * rhs.x - x * rhs.z,
+			x * rhs.y - y * rhs.x);
+
+		return tmp;
+	}
+
+	bool isEqual(const Tuple& rhs) const;
 
 	// Version with pointers
 	/*static std::unique_ptr<Tuple> CreatePoint(float x, float y, float z) {

@@ -1,11 +1,6 @@
 #pragma once
 
-//TODO: This should be centralized in one header with each export
-#ifdef BASICMATH_EXPORTS
-#define CLASS_DECLSPEC    __declspec(dllexport)
-#else
-#define CLASS_DECLSPEC    __declspec(dllimport)
-#endif
+#include "Export.h"
 
 #define EPSILON 0.00001f
 
