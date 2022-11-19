@@ -3,6 +3,6 @@
 #include "Utils.h"
 
 bool Tuple::isEqual(const Tuple& rhs) const {
-	return isEqualf(x, rhs.x) && isEqualf(y, rhs.y) &&
-		isEqualf(z, rhs.z) && isEqualf(w, rhs.w);
+	return isEquald(x, rhs.x) && isEquald(y, rhs.y) &&
+		isEquald(z, rhs.z) && isEquald(w, rhs.w);
 }

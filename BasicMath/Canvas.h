@@ -11,7 +11,7 @@
 #define MAX_COLOR_VAL 255
 #define MAX_LINE_LEN 70
 
-inline int getClampedValue(float val) {
+inline int getClampedValue(double val) {
 	return std::min<int>(std::max<int>(std::lround(val * MAX_COLOR_VAL), 0), MAX_COLOR_VAL);
 }
 
@@ -35,7 +35,11 @@ public:
 	}
 
 	void writePixel(int x, int y, Color color) {
-		pixels.get()[x + width * y] = color;
+		int pos = x + width * y;
+		if (pos < 0 || pos > getTotalSize() - 1) {
+			return;
+		}
+		pixels.get()[pos] = color;
 	}
 
 	Color pixelAt(int x, int y) const {

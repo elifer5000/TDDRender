@@ -4,7 +4,7 @@
 
 class CLASS_DECLSPEC Color : public Tuple {
 public:
-	Color(float red = 0.f, float green = 0.f, float blue = 0.f) : Tuple(red, green, blue, 0.f) {
+	Color(double red = 0.f, double green = 0.f, double blue = 0.f) : Tuple(red, green, blue, 0.f) {
 		
 	}
 
@@ -15,15 +15,15 @@ public:
 		w = other.w;
 	}
 
-    float& r() { return x; }
-    float& g() { return y; }
-    float& b() { return z; }
-    const float& r() const { return x; }
-    const float& g() const { return y; }
-    const float& b() const { return z; }
-	void setR(float r) { x = r; }
-	void setG(float g) { y = g; }
-	void setB(float b) { z = b; }
+    double& r() { return x; }
+    double& g() { return y; }
+    double& b() { return z; }
+    const double& r() const { return x; }
+    const double& g() const { return y; }
+    const double& b() const { return z; }
+	void setR(double r) { x = r; }
+	void setG(double g) { y = g; }
+	void setB(double b) { z = b; }
 
 	Color hadamard_product(const Color& rhs) {
 		Color tmp(*this);
@@ -37,12 +37,12 @@ public:
 
 //class CLASS_DECLSPEC Color : public Tuple {
 //public:
-//	Color(float red, float green, float blue) : Tuple(red, green, blue, 0.f) {}
+//	Color(double red, double green, double blue) : Tuple(red, green, blue, 0.f) {}
 //
-//    float& r() { return x; }
-//    float& g() { return y; }
-//    float& b() { return z; }
-//    const float& r() const { return x; }
-//    const float& g() const { return y; }
-//    const float& b() const { return z; }
+//    double& r() { return x; }
+//    double& g() { return y; }
+//    double& b() { return z; }
+//    const double& r() const { return x; }
+//    const double& g() const { return y; }
+//    const double& b() const { return z; }
 //};

@@ -5,12 +5,12 @@
 
 class CLASS_DECLSPEC Tuple {
 public:
-	float x;
-	float y;
-	float z;
-	float w;
+	double x;
+	double y;
+	double z;
+	double w;
 
-	Tuple(float _x = 0.f, float _y = 0.f, float _z = 0.f, float _w = 0.f) : x(_x), y(_y), z(_z), w(_w) {}
+	Tuple(double _x = 0.f, double _y = 0.f, double _z = 0.f, double _w = 0.f) : x(_x), y(_y), z(_z), w(_w) {}
 	Tuple(const Tuple& tuple) {
 		x = tuple.x;
 		y = tuple.y;
@@ -56,7 +56,7 @@ public:
 		return *this;
 	}
 
-	Tuple& operator*=(float scalar) {
+	Tuple& operator*=(double scalar) {
 		x *= scalar;
 		y *= scalar;
 		z *= scalar;
@@ -65,7 +65,7 @@ public:
 		return *this;
 	}
 
-	Tuple& operator/=(float scalar) {
+	Tuple& operator/=(double scalar) {
 		x /= scalar;
 		y /= scalar;
 		z /= scalar;
@@ -92,21 +92,21 @@ public:
 		return *this;
 	}
 
-	Tuple operator*(float scalar) {
+	Tuple operator*(double scalar) {
 		Tuple tmp(*this);
 		tmp *= scalar;
 
 		return tmp;
 	}
 
-	Tuple operator/(float scalar) {
+	Tuple operator/(double scalar) {
 		Tuple tmp(*this);
 		tmp /= scalar;
 
 		return tmp;
 	}
 
-	float magnitude() const {
+	double magnitude() const {
 		return sqrt(x * x + y * y + z * z + w * w);
 	}
 
@@ -123,7 +123,7 @@ public:
 		return *this;
 	}
 
-	float dot(const Tuple& rhs) const {
+	double dot(const Tuple& rhs) const {
 		return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
 	}
 
@@ -138,22 +138,22 @@ public:
 	bool isEqual(const Tuple& rhs) const;
 
 	// Version with pointers
-	/*static std::unique_ptr<Tuple> CreatePoint(float x, float y, float z) {
+	/*static std::unique_ptr<Tuple> CreatePoint(double x, double y, double z) {
 		return std::make_unique<Tuple>(x, y, z, 1.0f);
 	}
 
-	static std::unique_ptr<Tuple> CreateVector(float x, float y, float z) {
+	static std::unique_ptr<Tuple> CreateVector(double x, double y, double z) {
 		return std::make_unique<Tuple>(x, y, z, 0.0f);
 	}
 	*/
 
 	// Version with move semantics (it's implicit!)
 	// https://stackoverflow.com/questions/28604816/proper-use-of-std-move-for-a-factory-class
-	static Tuple CreatePoint(float x, float y, float z) {
+	static Tuple CreatePoint(double x, double y, double z) {
 		return Tuple(x, y, z, 1.0f);
 	}
 
-	static Tuple CreateVector(float x, float y, float z) {
+	static Tuple CreateVector(double x, double y, double z) {
 		return Tuple(x, y, z, 0.0f);
 	}
 

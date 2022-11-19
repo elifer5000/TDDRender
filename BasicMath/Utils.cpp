@@ -2,14 +2,8 @@
 #include <cmath>
 #include "Utils.h"
 
-bool isEqualf(float a, float b) {
-	//OutputDebugString(L"Hello");
-	//_ASSERT(true);
-	return abs(a - b) < EPSILON;
-}
-
-short comp(float a, float b) {
-	float r = a - b;
+short comp(double a, double b) {
+	double r = a - b;
 
 	if (r > EPSILON) {
 		return 1;

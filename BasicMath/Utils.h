@@ -4,7 +4,14 @@
 
 #define EPSILON 0.00001f
 
-CLASS_DECLSPEC bool isEqualf(float a, float b);
+template<typename T> bool isEqualTemplate(T a, T b) {
+	//OutputDebugString(L"Hello");
+	//_ASSERT(true);
+	return abs(a - b) < EPSILON;
+}
+
+#define isEqualf isEqualTemplate<float>
+#define isEquald isEqualTemplate<double>
 
 /**
 * Returns:
@@ -12,4 +19,4 @@ CLASS_DECLSPEC bool isEqualf(float a, float b);
 * b > a -> -1
 * a == b -> 0
 */
-CLASS_DECLSPEC short comp(float a, float b);
+CLASS_DECLSPEC short comp(double a, double b);

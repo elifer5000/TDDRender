@@ -3,8 +3,8 @@
 #include "Utils.h"
 
 TEST(Utils, Comparisons) {
-	EXPECT_TRUE(isEqualf(5.0f, 5.000009f));
-	EXPECT_FALSE(isEqualf(5.0f, 4.8f));
+	EXPECT_TRUE(isEquald(5.0f, 5.000009f));
+	EXPECT_FALSE(isEquald(5.0f, 4.8f));
 	EXPECT_TRUE(comp(5.f, 3.f) == 1);
 	EXPECT_TRUE(comp(3.f, 5.f) == -1);
 	EXPECT_TRUE(comp(3.f, 3.000001f) == 0);
@@ -214,7 +214,7 @@ Then magnitude(v) = 1
 */
 TEST(Tuples, Magnitude1) {
 	Tuple v = Tuple::CreateVector(1.f, 0.f, 0.f);
-	EXPECT_TRUE(isEqualf(v.magnitude(), 1.f));
+	EXPECT_TRUE(isEquald(v.magnitude(), 1.f));
 }
 
 /*
@@ -224,7 +224,7 @@ Then magnitude(v) = 1
 */
 TEST(Tuples, Magnitude2) {
 	Tuple v = Tuple::CreateVector(0.f, 1.f, 0.f);
-	EXPECT_TRUE(isEqualf(v.magnitude(), 1.f));
+	EXPECT_TRUE(isEquald(v.magnitude(), 1.f));
 }
 
 
@@ -235,7 +235,7 @@ Then magnitude(v) = 1
 */
 TEST(Tuples, Magnitude3) {
 	Tuple v = Tuple::CreateVector(0.f, 0.f, 1.f);
-	EXPECT_TRUE(isEqualf(v.magnitude(), 1.f));
+	EXPECT_TRUE(isEquald(v.magnitude(), 1.f));
 }
 
 
@@ -246,7 +246,7 @@ Then magnitude(v) = √14
 */
 TEST(Tuples, Magnitude4) {
 	Tuple v = Tuple::CreateVector(1.f, 2.f, 3.f);
-	EXPECT_TRUE(isEqualf(v.magnitude(), sqrt(14.f)));
+	EXPECT_TRUE(isEquald(v.magnitude(), sqrt(14.f)));
 }
 
 
@@ -257,7 +257,7 @@ Then magnitude(v) = √14
 */
 TEST(Tuples, Magnitude5) {
 	Tuple v = Tuple::CreateVector(-1.f, -2.f, -3.f);
-	EXPECT_TRUE(isEqualf(v.magnitude(), sqrt(14.f)));
+	EXPECT_TRUE(isEquald(v.magnitude(), sqrt(14.f)));
 }
 
 /*
@@ -293,7 +293,7 @@ Then magnitude(norm) = 1
 TEST(Tuples, Normalize3) {
 	Tuple v = Tuple::CreateVector(4.f, 0.f, 0.f);
 	
-	EXPECT_TRUE(isEqualf(v.normalize().magnitude(), 1.f));
+	EXPECT_TRUE(isEquald(v.normalize().magnitude(), 1.f));
 }
 
 /*
@@ -306,7 +306,7 @@ TEST(Tuples, DotProduct) {
 	Tuple a = Tuple::CreateVector(1.f, 2.f, 3.f);
 	Tuple b = Tuple::CreateVector(2.f, 3.f, 4.f);
 
-	EXPECT_TRUE(isEqualf(a.dot(b), 20.f));
+	EXPECT_TRUE(isEquald(a.dot(b), 20.f));
 }
 
 /*
