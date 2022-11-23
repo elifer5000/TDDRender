@@ -3,30 +3,39 @@
 #include <vector>
 #include "Export.h"
 #include "Utils.h"
+#include "Tuple.h"
 
+typedef std::vector<std::vector<double>> InitVector;
 
-class CLASS_DECLSPEC Matrix {
+template<int ROWS, int COLS> class Matrix {
 public:
-	Matrix(int _rows, int _cols) : rows(_rows), cols(_cols) {
-		data = std::make_unique<double[]>(rows * cols);
+	Matrix() {
 		identity();
 	}
 
-	int nRows() { return rows; }
-	int nCols() { return cols; }
+	Matrix(const InitVector& vec) {
+		initFromData(vec);
+	}
+
+	Matrix(const Matrix<ROWS, COLS>& other) {
+		*this = other;
+	}
+
+	int nRows() { return ROWS; }
+	int nCols() { return COLS; }
 
 	void zero() {
 		fill(0);		
 	}
 
 	void fill(double val) {
-		int sz = rows * cols;
+		int sz = ROWS * COLS;
 		for (int i = 0; i < sz; i++) {
-			data.get()[i] = val;
+			data[i] = val;
 		}
 	}
 
-	void initFromData(const std::vector<std::vector<double>>& vec) {
+	void initFromData(const InitVector& vec) {
 		int r = 0, c = 0;
 		for (auto itr = vec.begin(); itr != vec.end(); itr++, r++) {
 			c = 0;
@@ -36,26 +45,25 @@ public:
 		}
 	}
 
-	double at(int row, int col) const { // row-first
-		return data.get()[col + row * cols];
+	inline double at(int row, int col) const { // row-first
+		return data[col + row * COLS];
 	}
 
-	void set(int row, int col, double val) {
-		data.get()[col + row * cols] = val;
+	inline void set(int row, int col, double val) {
+		data[col + row * COLS] = val;
 	}
 
 	void identity() {
-		auto ptr = data.get();
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
+		for (int r = 0; r < ROWS; r++) {
+			for (int c = 0; c < COLS; c++) {
 				(r == c) ? set(r, c, 1) : set(r, c, 0);
 			}
 		}
 	}
 
-	bool isEqual(const Matrix& other) {
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
+	bool isEqual(const Matrix<ROWS, COLS>& other) {
+		for (int r = 0; r < ROWS; r++) {
+			for (int c = 0; c < COLS; c++) {
 				if (!isEquald(at(r, c), other.at(r, c))) {
 					return false;
 				}
@@ -65,19 +73,47 @@ public:
 		return true;
 	}
 
-	static Matrix Make4x4() {
-		return Matrix(4, 4);
+	Matrix<ROWS, COLS>& operator=(const Matrix<ROWS, COLS>& other) {
+		int sz = ROWS * COLS;
+		for (int i = 0; i < sz; i++) {
+			data[i] = other.data[i];
+		}
+
+		return *this;
 	}
-	
-	static Matrix Make3x3() {
-		return Matrix(3, 3);
+
+	Matrix<ROWS, COLS> operator*(const Matrix<ROWS, COLS>& rhs) {
+		Matrix<ROWS, COLS> res;
+
+		for (int r = 0; r < ROWS; r++) {
+			for (int c = 0; c < COLS; c++) {
+				res.set(r, c,
+					at(r, 0) * rhs.at(0, c) +
+					at(r, 1) * rhs.at(1, c) +
+					at(r, 2) * rhs.at(2, c) +
+					at(r, 3) * rhs.at(3, c)
+				);
+			}
+		}
+
+		return res;
 	}
-	
-	static Matrix Make2x2() {
-		return Matrix(2, 2);
+
+	Tuple operator*(const Tuple& rhs) {
+		Tuple res;
+		for (int r = 0; r < ROWS; r++) {
+			res[r] = at(r, 0) * rhs.x + at(r, 1) * rhs.y +
+				at(r, 2) * rhs.z + at(r, 3) * rhs.w;
+		}
+
+		return res;
 	}
+
 private:
-	int rows, cols;
-	std::unique_ptr<double[]> data;
+	double data[ROWS * COLS];
 
 };
+
+#define Matrix3 Matrix<3, 3>
+#define Matrix2 Matrix<2, 2>
+#define Matrix4 Matrix<4, 4>

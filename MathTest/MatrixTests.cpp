@@ -1,7 +1,8 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include <vector>
 #include "Utils.h"
 #include "Matrix.h"
+#include "Tuple.h"
 
 
 /*
@@ -20,9 +21,9 @@ And M[3,0] = 13.5
 And M[3,2] = 15.5
 */
 TEST(Matrices, Create4x4) {
-	Matrix M = Matrix::Make4x4();
+	Matrix M = Matrix4();
 
-	std::vector<std::vector<double>> data{
+	InitVector data{
 		{ 1, 2, 3, 4 },
 		{ 5.5, 6.5, 7.5, 8.5 },
 		{ 9, 10, 11, 12 },
@@ -52,14 +53,11 @@ And M[1,0] = 1
 And M[1,1] = -2
 */
 TEST(Matrices, Create2x2) {
-	Matrix M = Matrix::Make2x2();
-
-	std::vector<std::vector<double>> data{
+	InitVector data{
 		{ -3, 5 },
 		{ 1, -2 }
 	};
-
-	M.initFromData(data);
+	Matrix M = Matrix2(data);
 
 	EXPECT_DOUBLE_EQ(M.at(0, 0), -3);
 	EXPECT_DOUBLE_EQ(M.at(0, 1), 5);
@@ -78,15 +76,12 @@ And M[1,1] = -2
 And M[2,2] = 1
 */
 TEST(Matrices, Create3x3) {
-	Matrix M = Matrix::Make3x3();
-
-	std::vector<std::vector<double>> data{
+	InitVector data{
 		{ -3, 5, 0 },
 		{ 1, -2, -7 },
 		{ 0, 1, 1 }
 	};
-
-	M.initFromData(data);
+	Matrix M = Matrix3(data);
 
 	EXPECT_DOUBLE_EQ(M.at(0, 0), -3);
 	EXPECT_DOUBLE_EQ(M.at(1, 1), -2);
@@ -108,24 +103,21 @@ And the following matrix B:
 Then A = B
 */
 TEST(Matrices, MatrixEquality) {
-	Matrix A = Matrix::Make4x4();
-
-	std::vector<std::vector<double>> data{
+	InitVector data{
 		{ 1, 2, 3, 4 },
 		{ 5, 6, 7, 8 },
 		{ 9, 8, 7, 6 },
 		{ 5, 4, 3, 2 }
 	};
+	Matrix A = Matrix4(data);
 
-	A.initFromData(data);
-
-	Matrix B = Matrix::Make4x4();
-	B.initFromData(data);
-
+	Matrix B = Matrix4(data);
+	
 	EXPECT_TRUE(A.isEqual(B));
 }
 
-/*Scenario: Matrix equality with different matrices 
+/*
+Scenario: Matrix equality with different matrices 
 Given the following matrix A:
 |1|2|3|4
 |5|6|7|8|
@@ -139,25 +131,93 @@ And the following matrix B:
 Then A != B
 */
 TEST(Matrices, MatrixEquality2) {
-	Matrix A = Matrix::Make4x4();
-	std::vector<std::vector<double>> data{
+	InitVector data{
 		{ 1, 2, 3, 4 },
 		{ 5, 6, 7, 8 },
 		{ 9, 8, 7, 6 },
 		{ 5, 4, 3, 2 }
 	};
-
-	A.initFromData(data);
-
-	Matrix B = Matrix::Make4x4();
-	std::vector<std::vector<double>> data2{
+	Matrix A = Matrix4(data);
+	
+	InitVector data2{
 	{ 2, 3, 4, 5 },
 	{ 6, 7, 8, 9 },
 	{ 8, 7, 6, 5 },
 	{ 4, 3, 2, 1 }
 	};
-
-	B.initFromData(data2);
-
+	Matrix B = Matrix4(data2);
+	
 	EXPECT_FALSE(A.isEqual(B));
+}
+
+/*
+Scenario: Multiplying two matrices
+Given the following matrix A:
+|1|2|3|4|
+|5|6|7|8|
+|9|8|7|6|
+|5|4|3|2|
+And the following matrix B:
+|-2|1|2| 3|
+| 3|2|1|-1|
+| 4|3|6| 5|
+| 1|2|7| 8|
+Then A * B is the following 4x4 matrix:
+|20| 22| 50| 48|
+|44| 54|114|108|
+|40| 58|110|102|
+|16| 26| 46| 42|
+*/
+TEST(Matrices, MatrixMult) {
+	InitVector data{
+		{ 1, 2, 3, 4 },
+		{ 5, 6, 7, 8 },
+		{ 9, 8, 7, 6 },
+		{ 5, 4, 3, 2 }
+	};
+	Matrix A = Matrix4(data);
+
+	InitVector data2{
+		{ -2, 1, 2, 3 },
+		{ 3, 2, 1, -1 },
+		{ 4, 3, 6, 5 },
+		{ 1, 2, 7, 8 }
+	};
+	Matrix B = Matrix4(data2);
+
+	InitVector data3{
+		{ 20, 22, 50, 48 },
+		{ 44, 54, 114, 108 },
+		{ 40, 58, 110, 102 },
+		{ 16, 26, 46, 42 }
+	};
+	Matrix expected = Matrix4(data3);
+
+	EXPECT_TRUE((A * B).isEqual(expected));
+}
+
+/*
+Scenario: A matrix multiplied by a tuple
+Given the following matrix A:
+|1|2|3|4|
+|2|4|4|2|
+|8|6|4|1|
+|0|0|0|1|
+And b ← tuple(1, 2, 3, 1)
+Then A * b = tuple(18, 24, 33, 1)
+*/
+TEST(Matrices, MatrixTupleMult) {
+	InitVector data{
+		{ 1, 2, 3, 4 },
+		{ 2, 4, 4, 2 },
+		{ 8, 6, 4, 1 },
+		{ 0, 0, 0, 1 }
+	};
+	Matrix A = Matrix4(data);
+
+	auto b = Tuple(1, 2, 3, 1);
+
+	auto expected = Tuple(18, 24, 33, 1);
+
+	EXPECT_TRUE((A * b).isEqual(expected));
 }

@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Export.h"
 
-class CLASS_DECLSPEC Tuple {
+class BASICMATH_DECLSPEC Tuple {
 public:
 	double x;
 	double y;
@@ -24,16 +24,30 @@ public:
 	bool isPoint() const { return w == 1.0f; }
 	bool isVector() const { return w == 0.0f; }
 
-	Tuple operator+(const Tuple& rhs) {
+	Tuple operator+(const Tuple& rhs) const {
 		Tuple tmp(*this);
 		tmp += rhs;
 
 		return tmp;
 	}
 
-	Tuple operator-(const Tuple& rhs) {
+	Tuple operator-(const Tuple& rhs) const {
 		Tuple tmp(*this);
 		tmp -= rhs;
+
+		return tmp;
+	}
+
+	Tuple operator*(double scalar) const {
+		Tuple tmp(*this);
+		tmp *= scalar;
+
+		return tmp;
+	}
+
+	Tuple operator/(double scalar) const {
+		Tuple tmp(*this);
+		tmp /= scalar;
 
 		return tmp;
 	}
@@ -74,8 +88,18 @@ public:
 		return *this;
 	}
 
+	double& operator[](int idx) {
+		switch (idx) {
+			case 0: return x;
+			case 1: return y;
+			case 2: return z;
+			case 3: return w;
+			default: throw "Invalid tuple index";
+		}
+	}
+
 	// Negation overload
-	Tuple operator-() {
+	Tuple operator-() const {
 		Tuple tmp(*this);
 		tmp.negate();
 
@@ -90,20 +114,6 @@ public:
 		w *= -1.f;
 
 		return *this;
-	}
-
-	Tuple operator*(double scalar) {
-		Tuple tmp(*this);
-		tmp *= scalar;
-
-		return tmp;
-	}
-
-	Tuple operator/(double scalar) {
-		Tuple tmp(*this);
-		tmp /= scalar;
-
-		return tmp;
 	}
 
 	double magnitude() const {
