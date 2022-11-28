@@ -5,4 +5,4 @@ A work-in-progress, test-driven raytracer, based on the book "The Raytracer chal
 Chapters finished:
 1. Tuples, Points and Vectors
 2. Drawing on a Canvas
-3. Matrices (~30%)
+3. Matrices
