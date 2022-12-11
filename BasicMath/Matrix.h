@@ -195,6 +195,14 @@ public:
 		return res;
 	}
 
+	Matrix<ROWS, COLS>& translate(double x, double y, double z) {
+		static_assert(ROWS == 4 && COLS == 4, "translate only in Matrix4");
+	}
+
+	Matrix<ROWS, COLS>& scale(double x, double y, double z) {
+		static_assert(ROWS == 4 && COLS == 4, "scale only in Matrix4");
+	}
+
 private:
 	double data[ROWS * COLS];
 
@@ -206,4 +214,23 @@ private:
 
 template<> double Matrix2::determinant() const {
 	return at(0, 0) * at(1, 1) - at(0, 1) * at(1, 0);
+}
+
+namespace Transforms {
+	Matrix4 BASICMATH_DECLSPEC MakeTranslation(double x, double y, double z);
+	Matrix4 BASICMATH_DECLSPEC MakeScale(double x, double y, double z);
+}
+
+template<> Matrix4& Matrix4::translate(double x, double y, double z) {
+	auto m = Transforms::MakeTranslation(x, y, z);
+	*this = (*this) * m;
+
+	return *this;
+}
+
+template<> Matrix4& Matrix4::scale(double x, double y, double z) {
+	auto m = Transforms::MakeScale(x, y, z);
+	*this = (*this) * m;
+
+	return *this;
 }
