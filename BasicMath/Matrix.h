@@ -195,11 +195,24 @@ public:
 		return res;
 	}
 
+	// Transform functions
 	Matrix<ROWS, COLS>& translate(double x, double y, double z) {
 		static_assert(ROWS == 4 && COLS == 4, "translate only in Matrix4");
 	}
 
 	Matrix<ROWS, COLS>& scale(double x, double y, double z) {
+		static_assert(ROWS == 4 && COLS == 4, "scale only in Matrix4");
+	}
+
+	Matrix<ROWS, COLS>& rotateX(double rad) {
+		static_assert(ROWS == 4 && COLS == 4, "scale only in Matrix4");
+	}
+
+	Matrix<ROWS, COLS>& rotateY(double rad) {
+		static_assert(ROWS == 4 && COLS == 4, "scale only in Matrix4");
+	}
+
+	Matrix<ROWS, COLS>& rotateZ(double rad) {
 		static_assert(ROWS == 4 && COLS == 4, "scale only in Matrix4");
 	}
 
@@ -219,5 +232,8 @@ template<> double Matrix2::determinant() const {
 namespace Transforms {
 	Matrix4 BASICMATH_DECLSPEC MakeTranslation(double x, double y, double z);
 	Matrix4 BASICMATH_DECLSPEC MakeScale(double x, double y, double z);
+	Matrix4 BASICMATH_DECLSPEC MakeRotateX(double rad);
+	Matrix4 BASICMATH_DECLSPEC MakeRotateY(double rad);
+	Matrix4 BASICMATH_DECLSPEC MakeRotateZ(double rad);
 }
 

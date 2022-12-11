@@ -10,4 +10,6 @@
 // add headers that you want to pre-compile here
 #include "framework.h"
 
+#define _USE_MATH_DEFINES
+
 #endif //PCH_H

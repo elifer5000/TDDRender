@@ -1,5 +1,7 @@
 ﻿#include "pch.h"
+#include <cmath>
 #include <vector>
+
 #include "Utils.h"
 #include "Matrix.h"
 #include "Tuple.h"
@@ -109,4 +111,34 @@ TEST(Transforms, Reflection) {
 	auto expected = Tuple::CreatePoint(-2, 3, 4);
 
 	EXPECT_TRUE((transform * p).isEqual(expected));
+}
+
+/*
+Scenario: Rotating a point around the x axis
+Given p ← point(0, 1, 0)
+And half_quarter ← rotation_x(π / 4)
+And full_quarter ← rotation_x(π / 2)
+Then half_quarter * p = point(0, √2/2, √2/2)
+And full_quarter * p = point(0, 0, 1)
+*/
+TEST(Transforms, RotateX) {
+	auto p = Tuple::CreatePoint(0, 1, 0);
+	auto half_quarter = Transforms::MakeRotateX(M_PI / 4);
+	auto full_quarter = Transforms::MakeRotateX(M_PI / 2);
+
+	auto expectedHalf = Tuple::CreatePoint(0, sqrt(2) / 2.0, sqrt(2) / 2.0);
+	auto expectedFull = Tuple::CreatePoint(0, 0, 1);
+
+	EXPECT_TRUE((half_quarter * p).isEqual(expectedHalf));
+	EXPECT_TRUE((full_quarter * p).isEqual(expectedFull));
+}
+
+/*
+Scenario: The inverse of an x-rotation rotates in the opposite direction
+Given p ← point(0, 1, 0)
+And half_quarter ← rotation_x(π / 4)
+And inv ← inverse(half_quarter)
+Then inv * p = point(0, √2/2, -√2/2)
+*/
+TEST(Transforms, InvRotateX) {
 }
