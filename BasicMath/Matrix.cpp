@@ -20,3 +20,17 @@ namespace Transforms {
 		return m;
 	}
 }
+
+template<> Matrix4& Matrix4::translate(double x, double y, double z) {
+	auto m = Transforms::MakeTranslation(x, y, z);
+	*this = (*this) * m;
+
+	return *this;
+}
+
+template<> Matrix4& Matrix4::scale(double x, double y, double z) {
+	auto m = Transforms::MakeScale(x, y, z);
+	*this = (*this) * m;
+
+	return *this;
+}
