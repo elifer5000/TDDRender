@@ -208,9 +208,9 @@ private:
 
 };
 
-#define Matrix3 Matrix<3, 3>
-#define Matrix2 Matrix<2, 2>
-#define Matrix4 Matrix<4, 4>
+using Matrix3 = Matrix<3, 3>;
+using Matrix2 = Matrix<2, 2>;
+using Matrix4 = Matrix<4, 4>;
 
 template<> double Matrix2::determinant() const {
 	return at(0, 0) * at(1, 1) - at(0, 1) * at(1, 0);
