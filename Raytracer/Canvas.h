@@ -15,7 +15,7 @@ inline int getClampedValue(double val) {
 	return std::min<int>(std::max<int>(std::lround(val * MAX_COLOR_VAL), 0), MAX_COLOR_VAL);
 }
 
-class BASICMATH_DECLSPEC Canvas {
+class RAYTRACER_DECLSPEC Canvas {
 public:
 	int width, height;
 	Canvas(int w, int h) : width(w), height(h) {

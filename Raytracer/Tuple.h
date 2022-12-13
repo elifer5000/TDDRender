@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Export.h"
 
-class BASICMATH_DECLSPEC Tuple {
+class RAYTRACER_DECLSPEC Tuple {
 public:
 	double x;
 	double y;

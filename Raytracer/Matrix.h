@@ -246,12 +246,12 @@ template<> double Matrix2::determinant() const {
 }
 
 namespace Transforms {
-	Matrix4 BASICMATH_DECLSPEC MakeTranslation(double x, double y, double z);
-	Matrix4 BASICMATH_DECLSPEC MakeScale(double x, double y, double z);
-	Matrix4 BASICMATH_DECLSPEC MakeRotateX(double rad);
-	Matrix4 BASICMATH_DECLSPEC MakeRotateY(double rad);
-	Matrix4 BASICMATH_DECLSPEC MakeRotateZ(double rad);
-	Matrix4 BASICMATH_DECLSPEC MakeShear(double xy, double xz, double yx, double yz, double zx, double zy);
+	Matrix4 RAYTRACER_DECLSPEC MakeTranslation(double x, double y, double z);
+	Matrix4 RAYTRACER_DECLSPEC MakeScale(double x, double y, double z);
+	Matrix4 RAYTRACER_DECLSPEC MakeRotateX(double rad);
+	Matrix4 RAYTRACER_DECLSPEC MakeRotateY(double rad);
+	Matrix4 RAYTRACER_DECLSPEC MakeRotateZ(double rad);
+	Matrix4 RAYTRACER_DECLSPEC MakeShear(double xy, double xz, double yx, double yz, double zx, double zy);
 }
 
 template<> Matrix4& Matrix4::translate(double x, double y, double z) {

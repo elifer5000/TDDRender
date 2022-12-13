@@ -101,7 +101,7 @@
     <IncludePath>$(SolutionDir)/BasicMath;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
-    <IncludePath>$(SolutionDir)/BasicMath;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Raytracer;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -193,13 +193,13 @@
     <ClCompile Include="ConsoleTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BasicMath\BasicMath.vcxproj">
-      <Project>{f193a49a-45d3-492c-ae68-be4ce941e18c}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Chapter2\projectile.h" />
     <ClInclude Include="Chapter4\DrawClock.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Raytracer\Raytracer.vcxproj">
+      <Project>{f193a49a-45d3-492c-ae68-be4ce941e18c}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

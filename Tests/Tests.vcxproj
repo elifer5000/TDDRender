@@ -44,7 +44,7 @@
     <IncludePath>$(SolutionDir)\BasicMath;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <IncludePath>$(SolutionDir)\BasicMath;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Raytracer;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -67,7 +67,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BasicMath\BasicMath.vcxproj">
+    <ProjectReference Include="..\Raytracer\Raytracer.vcxproj">
       <Project>{f193a49a-45d3-492c-ae68-be4ce941e18c}</Project>
     </ProjectReference>
   </ItemGroup>

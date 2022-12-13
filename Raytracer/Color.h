@@ -2,7 +2,7 @@
 #include "Export.h"
 #include "Tuple.h"
 
-class BASICMATH_DECLSPEC Color : public Tuple {
+class RAYTRACER_DECLSPEC Color : public Tuple {
 public:
 	Color(double red = 0.f, double green = 0.f, double blue = 0.f) : Tuple(red, green, blue, 0.f) {
 		
@@ -35,7 +35,7 @@ public:
 	}
 };
 
-//class BASICMATH_DECLSPEC Color : public Tuple {
+//class RAYTRACER_DECLSPEC Color : public Tuple {
 //public:
 //	Color(double red, double green, double blue) : Tuple(red, green, blue, 0.f) {}
 //

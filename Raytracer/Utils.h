@@ -19,6 +19,6 @@ template<typename T> bool isEqualTemplate(T a, T b) {
 * b > a -> -1
 * a == b -> 0
 */
-BASICMATH_DECLSPEC short comp(double a, double b);
+RAYTRACER_DECLSPEC short comp(double a, double b);
 
-BASICMATH_DECLSPEC double rad2deg(double rad);
+RAYTRACER_DECLSPEC double rad2deg(double rad);
