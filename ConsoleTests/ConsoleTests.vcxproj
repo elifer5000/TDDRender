@@ -188,12 +188,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Chapter2\projectile.cpp" />
+    <ClCompile Include="Chapter4\DrawClock.cpp" />
     <ClCompile Include="ConsoleTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicMath\BasicMath.vcxproj">
       <Project>{f193a49a-45d3-492c-ae68-be4ce941e18c}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Chapter2\projectile.h" />
+    <ClInclude Include="Chapter4\DrawClock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

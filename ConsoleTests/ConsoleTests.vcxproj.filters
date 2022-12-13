@@ -13,10 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Chapter2">
+      <UniqueIdentifier>{343c0fb1-2ebc-4ea2-9b27-64b1e4faf395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Chapter2">
+      <UniqueIdentifier>{c16dbffd-71dd-4cfb-9b72-311dab239e0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Chapter4">
+      <UniqueIdentifier>{3faf5c1d-b079-47f2-bcce-a5ae96ce23c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chapter4">
+      <UniqueIdentifier>{b2f3892e-4bde-4d79-bfff-7ebddd2cc243}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Chapter2\projectile.cpp">
+      <Filter>Source Files\Chapter2</Filter>
+    </ClCompile>
+    <ClCompile Include="Chapter4\DrawClock.cpp">
+      <Filter>Source Files\Chapter4</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Chapter2\projectile.h">
+      <Filter>Header Files\Chapter2</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter4\DrawClock.h">
+      <Filter>Header Files\Chapter4</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

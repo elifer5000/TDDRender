@@ -10,7 +10,7 @@ public:
 	double z;
 	double w;
 
-	Tuple(double _x = 0.f, double _y = 0.f, double _z = 0.f, double _w = 0.f) : x(_x), y(_y), z(_z), w(_w) {}
+	Tuple(double _x = 0, double _y = 0, double _z = 0, double _w = 0) : x(_x), y(_y), z(_z), w(_w) {}
 	Tuple(const Tuple& tuple) {
 		x = tuple.x;
 		y = tuple.y;
@@ -159,12 +159,12 @@ public:
 
 	// Version with move semantics (it's implicit!)
 	// https://stackoverflow.com/questions/28604816/proper-use-of-std-move-for-a-factory-class
-	static Tuple CreatePoint(double x, double y, double z) {
-		return Tuple(x, y, z, 1.0f);
+	static Tuple CreatePoint(double x = 0, double y = 0, double z = 0) {
+		return Tuple(x, y, z, 1.0);
 	}
 
-	static Tuple CreateVector(double x, double y, double z) {
-		return Tuple(x, y, z, 0.0f);
+	static Tuple CreateVector(double x = 0, double y = 0, double z = 0) {
+		return Tuple(x, y, z, 0.0);
 	}
 
 };

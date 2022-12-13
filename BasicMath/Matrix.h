@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <iomanip>
 #include "Export.h"
 #include "Utils.h"
 #include "Tuple.h"
@@ -205,17 +206,32 @@ public:
 	}
 
 	Matrix<ROWS, COLS>& rotateX(double rad) {
-		static_assert(ROWS == 4 && COLS == 4, "scale only in Matrix4");
+		static_assert(ROWS == 4 && COLS == 4, "rotateX only in Matrix4");
 	}
 
 	Matrix<ROWS, COLS>& rotateY(double rad) {
-		static_assert(ROWS == 4 && COLS == 4, "scale only in Matrix4");
+		static_assert(ROWS == 4 && COLS == 4, "rotateY only in Matrix4");
 	}
 
 	Matrix<ROWS, COLS>& rotateZ(double rad) {
-		static_assert(ROWS == 4 && COLS == 4, "scale only in Matrix4");
+		static_assert(ROWS == 4 && COLS == 4, "rotateZ only in Matrix4");
 	}
 
+	Matrix<ROWS, COLS>& shear(double xy, double xz, double yx, double yz, double zx, double zy) {
+		static_assert(ROWS == 4 && COLS == 4, "shear only in Matrix4");
+	}
+
+	// For debugging
+	const Matrix<ROWS, COLS>& print() {
+		for (int r = 0; r < ROWS; r++) {
+			for (int c = 0; c < COLS; c++) {
+				std::cout << std::fixed << std::setprecision(5) << at(r, c) << " ";
+			}
+			std::cout << std::endl;
+		}
+
+		return *this;
+	}
 private:
 	double data[ROWS * COLS];
 
@@ -235,5 +251,47 @@ namespace Transforms {
 	Matrix4 BASICMATH_DECLSPEC MakeRotateX(double rad);
 	Matrix4 BASICMATH_DECLSPEC MakeRotateY(double rad);
 	Matrix4 BASICMATH_DECLSPEC MakeRotateZ(double rad);
+	Matrix4 BASICMATH_DECLSPEC MakeShear(double xy, double xz, double yx, double yz, double zx, double zy);
 }
 
+template<> Matrix4& Matrix4::translate(double x, double y, double z) {
+	auto m = Transforms::MakeTranslation(x, y, z);
+	*this = m * (*this);
+
+	return *this;
+}
+
+template<> Matrix4& Matrix4::scale(double x, double y, double z) {
+	auto m = Transforms::MakeScale(x, y, z);
+	*this = m * (*this);
+
+	return *this;
+}
+
+template<> Matrix4& Matrix4::rotateX(double rad) {
+	auto m = Transforms::MakeRotateX(rad);
+	*this = m * (*this);
+
+	return *this;
+}
+
+template<> Matrix4& Matrix4::rotateY(double rad) {
+	auto m = Transforms::MakeRotateY(rad);
+	*this = (*this) * m;
+
+	return *this;
+}
+
+template<> Matrix4& Matrix4::rotateZ(double rad) {
+	auto m = Transforms::MakeRotateZ(rad);
+	*this = (*this) * m;
+
+	return *this;
+}
+
+template<> Matrix4& Matrix4::shear(double xy, double xz, double yx, double yz, double zx, double zy) {
+	auto m = Transforms::MakeShear(xy, xz, yx, yz, zx, zy);
+	*this = (*this) * m;
+
+	return *this;
+}

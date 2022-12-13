@@ -30,52 +30,29 @@ namespace Transforms {
 
 	Matrix4 MakeRotateY(double rad) {
 		Matrix4 m;
-		//m(1, 2) = m(2, 3) = cos(rad);
-		//m(1, 3) = -(m(2, 1) = sin(rad));
+		m(0, 0) = m(2, 2) = cos(rad);
+		m(2, 0) = -(m(0, 2) = sin(rad));
 
 		return m;
 	}
 
 	Matrix4 MakeRotateZ(double rad) {
 		Matrix4 m;
-		//m(1, 2) = m(2, 3) = cos(rad);
-		//m(1, 3) = -(m(2, 1) = sin(rad));
+		m(0, 0) = m(1, 1) = cos(rad);
+		m(0, 1) = -(m(1, 0) = sin(rad));
 
 		return m;
 	}
-}
 
-template<> Matrix4& Matrix4::translate(double x, double y, double z) {
-	auto m = Transforms::MakeTranslation(x, y, z);
-	*this = (*this) * m;
-
-	return *this;
-}
-
-template<> Matrix4& Matrix4::scale(double x, double y, double z) {
-	auto m = Transforms::MakeScale(x, y, z);
-	*this = (*this) * m;
-
-	return *this;
-}
-
-template<> Matrix4& Matrix4::rotateX(double rad) {
-	auto m = Transforms::MakeRotateX(rad);
-	*this = (*this) * m;
-
-	return *this;
-}
-
-template<> Matrix4& Matrix4::rotateY(double rad) {
-	auto m = Transforms::MakeRotateY(rad);
-	*this = (*this) * m;
-
-	return *this;
-}
-
-template<> Matrix4& Matrix4::rotateZ(double rad) {
-	auto m = Transforms::MakeRotateZ(rad);
-	*this = (*this) * m;
-
-	return *this;
+	Matrix4 MakeShear(double xy, double xz, double yx, double yz, double zx, double zy) {
+		Matrix4 m;
+		m(0, 1) = xy;
+		m(0, 2) = xz;
+		m(1, 0) = yx;
+		m(1, 2) = yz;
+		m(2, 0) = zx;
+		m(2, 1) = zy;
+		
+		return m;
+	}
 }
