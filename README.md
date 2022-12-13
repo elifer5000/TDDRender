@@ -6,3 +6,4 @@ Chapters finished:
 1. Tuples, Points and Vectors
 2. Drawing on a Canvas
 3. Matrices
+4. Transforms
