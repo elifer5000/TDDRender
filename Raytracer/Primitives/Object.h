@@ -2,10 +2,14 @@
 
 // Base object class for primitives (and maybe more?)
 class Object {
-	inline static int _idCounter = 0;
-	int _id;
+	inline static int s_idCounter = 0;
+	int m_id;
 public:
 	Object() {
-		_id = _idCounter++;
+		m_id = s_idCounter++;
+	}
+
+	int id() {
+		return m_id;
 	}
 };

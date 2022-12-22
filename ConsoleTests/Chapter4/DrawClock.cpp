@@ -23,7 +23,7 @@ void DrawClock() {
     auto moveToOrigin = moveToCenter.inverse();
     for (int i = 0; i < 12; i++) {
         p = moveToCenter * rotate * p;
-        canvas.writePixel(round(p.x), round(p.y), white);
+        canvas.writePixel(round(p.x()), round(p.y()), white);
         p = moveToOrigin * p;
     }
 

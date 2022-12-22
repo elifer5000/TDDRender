@@ -21,10 +21,10 @@ And a is a point
 And a is not a vector*/
 TEST(Tuples, TuplePoint) {
 	Tuple a(4.3f, -4.2f, 3.1f, 1.0f);
-	EXPECT_EQ(a.x, 4.3f);
-	EXPECT_EQ(a.y, -4.2f);
-	EXPECT_EQ(a.z, 3.1f);
-	EXPECT_EQ(a.w, 1.0f);
+	EXPECT_EQ(a.x(), 4.3f);
+	EXPECT_EQ(a.y(), -4.2f);
+	EXPECT_EQ(a.z(), 3.1f);
+	EXPECT_EQ(a.w(), 1.0f);
 	EXPECT_TRUE(a.isPoint());
 	EXPECT_FALSE(a.isVector());
 }
@@ -38,10 +38,10 @@ And a.w = 0.0
 And a is not a point And a is a vector*/
 TEST(Tuples, TupleVector) {
 	Tuple a(4.3f, -4.2f, 3.1f, 0.0f);
-	EXPECT_EQ(a.x, 4.3f);
-	EXPECT_EQ(a.y, -4.2f);
-	EXPECT_EQ(a.z, 3.1f);
-	EXPECT_EQ(a.w, 0.0f);
+	EXPECT_EQ(a.x(), 4.3f);
+	EXPECT_EQ(a.y(), -4.2f);
+	EXPECT_EQ(a.z(), 3.1f);
+	EXPECT_EQ(a.w(), 0.0f);
 	EXPECT_FALSE(a.isPoint());
 	EXPECT_TRUE(a.isVector());
 }

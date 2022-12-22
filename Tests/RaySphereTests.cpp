@@ -4,8 +4,24 @@
 //#include <vector>
 
 #include "Utils.h"
+#include "Primitives/Sphere.h"
 //#include "Matrix.h"
 //#include "Tuple.h"
+
+/*
+Sceneario: Creating 2 spheres
+Given s1 ← sphere()
+And s2 ← sphere()
+Then s1.id = 1
+And s2.id = 2
+*/
+TEST(Raysphere, SpheresId) {
+	auto s1 = Sphere();
+	auto s2 = Sphere();
+
+	EXPECT_EQ(s1.id(), 0);
+	EXPECT_EQ(s2.id(), 1);
+}
 
 /*
 Scenario: Creating and querying a ray
@@ -19,10 +35,10 @@ TEST(Raysphere, CreateRay) {
 	auto direction = Tuple::CreateVector(4, 5, 6);
 	auto ray = Ray(origin, direction);
 
-	EXPECT_TRUE(ray.origin.isEqual(origin));
-	EXPECT_TRUE(ray.origin.isPoint());
-	EXPECT_TRUE(ray.direction.isEqual(direction));
-	EXPECT_TRUE(ray.direction.isVector());
+	EXPECT_TRUE(ray.m_origin.isEqual(origin));
+	EXPECT_TRUE(ray.m_origin.isPoint());
+	EXPECT_TRUE(ray.m_direction.isEqual(direction));
+	EXPECT_TRUE(ray.m_direction.isVector());
 
 
 }
@@ -60,9 +76,9 @@ TEST(Raysphere, RaySphereAt2Points) {
 	auto direction = Tuple::CreateVector(0, 0, 1);
 	auto ray = Ray(origin, direction);
 
-	/*auto sphere = Sphere();
-	auto xs = ray.intersect(sphere);
-	EXPECT_EQ(xs.count, 2);
-	EXPECT_TRUE(isEquald(xs[0], 4.0));
-	EXPECT_TRUE(isEquald(xs[1], 6.0));*/
+	//auto sphere = Sphere();
+	//auto xs = ray.intersect(sphere);
+	//EXPECT_EQ(xs.size(), 2);
+	//EXPECT_TRUE(isEquald(xs[0], 4.0));
+	//EXPECT_TRUE(isEquald(xs[1], 6.0));
 }

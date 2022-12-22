@@ -17,14 +17,14 @@ inline int getClampedValue(double val) {
 
 class RAYTRACER_DECLSPEC Canvas {
 public:
-	int width, height;
-	Canvas(int w, int h) : width(w), height(h) {
+	int m_width, m_height;
+	Canvas(int w, int h) : m_width(w), m_height(h) {
 		pixels = std::make_unique<Color[]>(getTotalSize());
 		fill(Color());
 	}
 
 	inline int getTotalSize() const {
-		return width * height;
+		return m_width * m_height;
 	}
 
 	void fill(const Color& c) {
@@ -35,7 +35,7 @@ public:
 	}
 
 	void writePixel(int x, int y, Color color) {
-		int pos = x + width * y;
+		int pos = x + m_width * y;
 		if (pos < 0 || pos > getTotalSize() - 1) {
 			return;
 		}
@@ -43,7 +43,7 @@ public:
 	}
 
 	Color pixelAt(int x, int y) const {
-		return pixels.get()[x + width * y];
+		return pixels.get()[x + m_width * y];
 	}
 
 	//TODO pass an optional folder (for saving tests separately)
@@ -58,7 +58,7 @@ public:
 		}
 
 		ofs << "P3" << std::endl;
-		ofs << width << " " << height << std::endl;
+		ofs << m_width << " " << m_height << std::endl;
 		ofs << MAX_COLOR_VAL << std::endl;
 
 		int sz = getTotalSize();
@@ -74,7 +74,7 @@ public:
 			snprintf(colorStr, MAX_LINE_LEN, "%d %d %d", r, g, b);
 			size_t len = strlen(colorStr);
 			if (line.size() + len + 1 > MAX_LINE_LEN ||   // Add 1 because for sure it will also have a space before
-				(i > 0 && i % width == 0)) { // If it's the first in a new row
+				(i > 0 && i % m_width == 0)) { // If it's the first in a new row
 				// Flush line
 				ofs << line << std::endl;
 				line.clear();

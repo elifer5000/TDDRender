@@ -32,7 +32,7 @@ public:
 	Matrix<ROWS, COLS>& fill(double val) {
 		int sz = ROWS * COLS;
 		for (int i = 0; i < sz; i++) {
-			data[i] = val;
+			m_data[i] = val;
 		}
 
 		return *this;
@@ -51,15 +51,15 @@ public:
 	}
 
 	inline double at(int row, int col) const { // row-first
-		return data[col + row * COLS];
+		return m_data[col + row * COLS];
 	}
 
 	inline void set(int row, int col, double val) {
-		data[col + row * COLS] = val;
+		m_data[col + row * COLS] = val;
 	}
 
 	inline double& operator()(int row, int col) {
-		return data[col + row * COLS];
+		return m_data[col + row * COLS];
 	}
 
 	Matrix<ROWS, COLS>& identity() {
@@ -87,7 +87,7 @@ public:
 	Matrix<ROWS, COLS>& operator=(const Matrix<ROWS, COLS>& other) {
 		int sz = ROWS * COLS;
 		for (int i = 0; i < sz; i++) {
-			data[i] = other.data[i];
+			m_data[i] = other.m_data[i];
 		}
 
 		return *this;
@@ -113,8 +113,8 @@ public:
 	Tuple operator*(const Tuple& rhs) {
 		Tuple res;
 		for (int r = 0; r < ROWS; r++) {
-			res[r] = at(r, 0) * rhs.x + at(r, 1) * rhs.y +
-				at(r, 2) * rhs.z + at(r, 3) * rhs.w;
+			res[r] = at(r, 0) * rhs.x() + at(r, 1) * rhs.y() +
+				at(r, 2) * rhs.z() + at(r, 3) * rhs.w();
 		}
 
 		return res;
@@ -233,7 +233,7 @@ public:
 		return *this;
 	}
 private:
-	double data[ROWS * COLS];
+	double m_data[ROWS * COLS];
 
 };
 

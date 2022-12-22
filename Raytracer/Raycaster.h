@@ -1,14 +1,24 @@
 #pragma once
+#include <vector>
 #include "Tuple.h"
+#include "Primitives/Object.h"
+
+using IntersectResult = std::vector<double>;
 
 class Ray {
 public:
-	Tuple origin;
-	Tuple direction;
+	Tuple m_origin;
+	Tuple m_direction;
 
-	Ray(const Tuple& _origin, const Tuple& _direction) : origin(_origin), direction(_direction) {}
+	Ray(const Tuple& origin, const Tuple& direction) : m_origin(origin), m_direction(direction) {}
 
 	Tuple position(double t) const {
-		return origin + direction * t;
+		return m_origin + m_direction * t;
+	}
+
+	IntersectResult intersect(const Object& obj) {
+		IntersectResult results;
+
+		return results;
 	}
 };

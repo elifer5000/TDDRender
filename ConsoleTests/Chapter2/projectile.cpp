@@ -4,8 +4,8 @@
 #include "Color.h"
 
 Projectile tick(Environment& env, Projectile proj) {
-    Tuple position = proj.position + proj.velocity;
-    Tuple velocity = proj.velocity + env.gravity + env.wind;
+    Tuple position = proj.m_position + proj.m_velocity;
+    Tuple velocity = proj.m_velocity + env.m_gravity + env.m_wind;
 
     return Projectile(position, velocity);
 }
@@ -22,10 +22,10 @@ void ThrowProjectile() {
     int count = 0;
     int x, y;
     auto red = Color(1, 0, 0);
-    while (p.position.y > 0) {
+    while (p.m_position.y() > 0) {
         p = tick(env, p);
-        x = round(p.position.x);
-        y = round(p.position.y);
+        x = round(p.m_position.x());
+        y = round(p.m_position.y());
         std::cout << "Run " << ++count << ": Position: " << x << " " << y << " " << std::endl;// p.position.z << std::endl;
         canvas.writePixel(x, h - y, red);
     }

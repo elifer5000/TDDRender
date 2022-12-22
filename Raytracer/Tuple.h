@@ -4,25 +4,35 @@
 #include "Export.h"
 
 class RAYTRACER_DECLSPEC Tuple {
-public:
-	double x;
-	double y;
-	double z;
-	double w;
+protected:
+	double m_x;
+	double m_y;
+	double m_z;
+	double m_w;
 
-	Tuple(double _x = 0, double _y = 0, double _z = 0, double _w = 0) : x(_x), y(_y), z(_z), w(_w) {}
+public:
+	Tuple(double _x = 0, double _y = 0, double _z = 0, double _w = 0) : m_x(_x), m_y(_y), m_z(_z), m_w(_w) {}
 	Tuple(const Tuple& tuple) {
-		x = tuple.x;
-		y = tuple.y;
-		z = tuple.z;
-		w = tuple.w;
+		m_x = tuple.m_x;
+		m_y = tuple.m_y;
+		m_z = tuple.m_z;
+		m_w = tuple.m_w;
 	}
 	~Tuple() {
 		/*std::cout << "Tuple destroyed" << std::endl;*/
 	}
-	
-	bool isPoint() const { return w == 1.0f; }
-	bool isVector() const { return w == 0.0f; }
+
+	auto x() -> double& { return m_x; }
+	auto x() const -> const double& { return m_x; }
+	auto y() -> double& { return m_y; }
+	auto y() const -> const double& { return m_y; }
+	auto z() -> double& { return m_z; }
+	auto z() const -> const double& { return m_z; }
+	auto w() -> double& { return m_w; }
+	auto w() const -> const double& { return m_w; }
+
+	bool isPoint() const { return m_w == 1.0f; }
+	bool isVector() const { return m_w == 0.0f; }
 
 	Tuple operator+(const Tuple& rhs) const {
 		Tuple tmp(*this);
@@ -53,47 +63,47 @@ public:
 	}
 
 	Tuple& operator+=(const Tuple& rhs) {
-		x += rhs.x;
-		y += rhs.y;
-		z += rhs.z;
-		w += rhs.w;
+		m_x += rhs.m_x;
+		m_y += rhs.m_y;
+		m_z += rhs.m_z;
+		m_w += rhs.m_w;
 
 		return *this;
 	}
 
 	Tuple& operator-=(const Tuple& rhs) {
-		x -= rhs.x;
-		y -= rhs.y;
-		z -= rhs.z;
-		w -= rhs.w;
+		m_x -= rhs.m_x;
+		m_y -= rhs.m_y;
+		m_z -= rhs.m_z;
+		m_w -= rhs.m_w;
 
 		return *this;
 	}
 
 	Tuple& operator*=(double scalar) {
-		x *= scalar;
-		y *= scalar;
-		z *= scalar;
-		w *= scalar;
+		m_x *= scalar;
+		m_y *= scalar;
+		m_z *= scalar;
+		m_w *= scalar;
 
 		return *this;
 	}
 
 	Tuple& operator/=(double scalar) {
-		x /= scalar;
-		y /= scalar;
-		z /= scalar;
-		w /= scalar;
+		m_x /= scalar;
+		m_y /= scalar;
+		m_z /= scalar;
+		m_w /= scalar;
 
 		return *this;
 	}
 
 	double& operator[](int idx) {
 		switch (idx) {
-			case 0: return x;
-			case 1: return y;
-			case 2: return z;
-			case 3: return w;
+			case 0: return m_x;
+			case 1: return m_y;
+			case 2: return m_z;
+			case 3: return m_w;
 			default: throw "Invalid tuple index";
 		}
 	}
@@ -108,39 +118,39 @@ public:
 
 	// Self negation
 	Tuple& negate() {
-		x *= -1.f;
-		y *= -1.f;
-		z *= -1.f;
-		w *= -1.f;
+		m_x *= -1.f;
+		m_y *= -1.f;
+		m_z *= -1.f;
+		m_w *= -1.f;
 
 		return *this;
 	}
 
 	double magnitude() const {
-		return sqrt(x * x + y * y + z * z + w * w);
+		return sqrt(m_x * m_x + m_y * m_y + m_z * m_z + m_w * m_w);
 	}
 
 	Tuple& normalize() {
 		auto len = magnitude();
 		
 		if (len > 0) {
-			x /= len;
-			y /= len;
-			z /= len;
-			w /= len;
+			m_x /= len;
+			m_y /= len;
+			m_z /= len;
+			m_w /= len;
 		}
 
 		return *this;
 	}
 
 	double dot(const Tuple& rhs) const {
-		return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
+		return m_x * rhs.m_x + m_y * rhs.m_y + m_z * rhs.m_z + m_w * rhs.m_w;
 	}
 
 	Tuple cross(const Tuple& rhs) const {
-		Tuple tmp = CreateVector(y * rhs.z - z * rhs.y,
-			z * rhs.x - x * rhs.z,
-			x * rhs.y - y * rhs.x);
+		Tuple tmp = CreateVector(m_y * rhs.m_z - m_z * rhs.m_y,
+			m_z * rhs.m_x - m_x * rhs.m_z,
+			m_x * rhs.m_y - m_y * rhs.m_x);
 
 		return tmp;
 	}

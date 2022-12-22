@@ -87,12 +87,12 @@ And every pixel of c is color(0, 0, 0)
 TEST(Canvas, Creation) {
 	Canvas c(10, 20);
 
-	EXPECT_EQ(c.width, 10);
-	EXPECT_EQ(c.height, 20);
+	EXPECT_EQ(c.m_width, 10);
+	EXPECT_EQ(c.m_height, 20);
 
 	Color expected(0.f, 0.f, 0.f);
-	for (int x = 0; x < c.width; x++) {
-		for (int y = 0; y < c.height; y++) {
+	for (int x = 0; x < c.m_width; x++) {
+		for (int y = 0; y < c.m_height; y++) {
 			EXPECT_TRUE(c.pixelAt(x, y).isEqual(expected));
 		}
 	}
