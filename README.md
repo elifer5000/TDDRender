@@ -7,3 +7,8 @@ Chapters finished:
 2. Drawing on a Canvas
 3. Matrices
 4. Transforms
+5. Ray-Sphere Intersections
+
+---
+## Progress report
+

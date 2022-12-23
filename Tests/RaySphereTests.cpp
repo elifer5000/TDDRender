@@ -76,9 +76,9 @@ TEST(Raysphere, RaySphereAt2Points) {
 	auto direction = Tuple::CreateVector(0, 0, 1);
 	auto ray = Ray(origin, direction);
 
-	//auto sphere = Sphere();
-	//auto xs = ray.intersect(sphere);
-	//EXPECT_EQ(xs.size(), 2);
-	//EXPECT_TRUE(isEquald(xs[0], 4.0));
-	//EXPECT_TRUE(isEquald(xs[1], 6.0));
+	auto sphere = Sphere();
+	auto xs = ray.intersect(sphere);
+	EXPECT_EQ(xs.size(), 2);
+	EXPECT_TRUE(isEquald(xs[0], 4.0));
+	EXPECT_TRUE(isEquald(xs[1], 6.0));
 }
