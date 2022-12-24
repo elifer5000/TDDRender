@@ -1,11 +1,13 @@
 #pragma once
 #include <vector>
+#include "Export.h"
 #include "Tuple.h"
-#include "Primitives/Object.h"
+
+class Object;
 
 using IntersectResult = std::vector<double>;
 
-class Ray {
+class RAYTRACER_DECLSPEC Ray {
 public:
 	Tuple m_origin;
 	Tuple m_direction;
@@ -16,9 +18,5 @@ public:
 		return m_origin + m_direction * t;
 	}
 
-	IntersectResult intersect(const Object& obj) {
-		IntersectResult results;
-
-		return results;
-	}
+	IntersectResult intersect(const Object& obj) const;
 };

@@ -16,6 +16,9 @@
     <Filter Include="Header Files\Primitives">
       <UniqueIdentifier>{5d5c1a67-de3d-48e9-835a-dda95682d33a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Primitives">
+      <UniqueIdentifier>{bcd2af84-3b3c-48e9-a6ab-1629506e0e2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -76,6 +79,12 @@
     </ClCompile>
     <ClCompile Include="Raycaster.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitives\Object.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitives\Sphere.cpp">
+      <Filter>Source Files\Primitives</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

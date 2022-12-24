@@ -1,7 +1,9 @@
 #pragma once
+#include "../Export.h"
+#include "../Raycaster.h"
 
 // Base object class for primitives (and maybe more?)
-class Object {
+class RAYTRACER_DECLSPEC Object {
 	inline static int s_idCounter = 0;
 	int m_id;
 public:
@@ -12,4 +14,6 @@ public:
 	int id() {
 		return m_id;
 	}
+
+	virtual IntersectResult intersect(const Ray& ray) const;
 };

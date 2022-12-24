@@ -82,3 +82,83 @@ TEST(Raysphere, RaySphereAt2Points) {
 	EXPECT_TRUE(isEquald(xs[0], 4.0));
 	EXPECT_TRUE(isEquald(xs[1], 6.0));
 }
+
+/*
+Scenario: A ray intersects a sphere at a tangent
+Given r ← ray(point(0, 1, -5), vector(0, 0, 1))
+And s ← sphere()
+When xs ← intersect(s, r)
+Then xs.count = 2
+And xs[0] = 5.0
+And xs[1] = 5.0
+*/
+TEST(Raysphere, RaySphereAtTangent) {
+	auto origin = Tuple::CreatePoint(0, 1, -5);
+	auto direction = Tuple::CreateVector(0, 0, 1);
+	auto ray = Ray(origin, direction);
+
+	auto sphere = Sphere();
+	auto xs = ray.intersect(sphere);
+	EXPECT_EQ(xs.size(), 2);
+	EXPECT_TRUE(isEquald(xs[0], 5.0));
+	EXPECT_TRUE(isEquald(xs[1], 5.0));
+}
+
+/*
+Scenario: A ray misses a sphere
+Given r ← ray(point(0, 2, -5), vector(0, 0, 1))
+And s ← sphere()
+When xs ← intersect(s, r)
+Then xs.count = 0
+*/
+TEST(Raysphere, RaySphereMiss) {
+	auto origin = Tuple::CreatePoint(0, 2, -5);
+	auto direction = Tuple::CreateVector(0, 0, 1);
+	auto ray = Ray(origin, direction);
+
+	auto sphere = Sphere();
+	auto xs = ray.intersect(sphere);
+	EXPECT_EQ(xs.size(), 0);
+}
+
+/*
+Scenario: A ray originates inside a sphere
+Given r ← ray(point(0, 0, 0), vector(0, 0, 1))
+And s ← sphere()
+When xs ← intersect(s, r)
+Then xs.count = 2
+And xs[0] = -1.0
+And xs[1] = 1.0
+*/
+TEST(Raysphere, RayInsideSphere) {
+	auto origin = Tuple::CreatePoint(0, 0, 0);
+	auto direction = Tuple::CreateVector(0, 0, 1);
+	auto ray = Ray(origin, direction);
+
+	auto sphere = Sphere();
+	auto xs = ray.intersect(sphere);
+	EXPECT_EQ(xs.size(), 2);
+	EXPECT_TRUE(isEquald(xs[0], -1.0));
+	EXPECT_TRUE(isEquald(xs[1], 1.0));
+}
+
+/*
+Scenario: A sphere is behind a ray
+Given r ← ray(point(0, 0, 5), vector(0, 0, 1))
+And s ← sphere()
+When xs ← intersect(s, r)
+Then xs.count = 2
+And xs[0] = -6.0
+And xs[1] = -4.0
+*/
+TEST(Raysphere, RayInFrontSphere) {
+	auto origin = Tuple::CreatePoint(0, 0, 5);
+	auto direction = Tuple::CreateVector(0, 0, 1);
+	auto ray = Ray(origin, direction);
+
+	auto sphere = Sphere();
+	auto xs = ray.intersect(sphere);
+	EXPECT_EQ(xs.size(), 2);
+	EXPECT_TRUE(isEquald(xs[0], -6.0));
+	EXPECT_TRUE(isEquald(xs[1], -4.0));
+}
