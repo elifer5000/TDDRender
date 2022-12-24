@@ -2,10 +2,9 @@
 #include <vector>
 #include "Export.h"
 #include "Tuple.h"
+#include "Intersection.h"
 
 class Object;
-
-using IntersectResult = std::vector<double>;
 
 class RAYTRACER_DECLSPEC Ray {
 public:
@@ -18,5 +17,5 @@ public:
 		return m_origin + m_direction * t;
 	}
 
-	IntersectResult intersect(const Object& obj) const;
+	Intersections intersect(const Object& obj) const;
 };

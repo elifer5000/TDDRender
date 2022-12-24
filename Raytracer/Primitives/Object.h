@@ -15,5 +15,5 @@ public:
 		return m_id;
 	}
 
-	virtual IntersectResult intersect(const Ray& ray) const;
+	virtual Intersections intersect(const Ray& ray) const;
 };

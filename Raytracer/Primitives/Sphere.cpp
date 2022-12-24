@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "Sphere.h"
+#include <vector>
 
-IntersectResult Sphere::intersect(const Ray& ray) const {
+Intersections Sphere::intersect(const Ray& ray) const {
 	// Vector from sphere center to ray origin
 	auto sphereToRayVec = ray.m_origin - Tuple::CreatePoint(0, 0, 0);
 	auto a = ray.m_direction.dot(ray.m_direction);
@@ -11,7 +12,7 @@ IntersectResult Sphere::intersect(const Ray& ray) const {
 	auto discriminant = b * b - 4 * a * c;
 
 	if (discriminant < 0) {
-		return IntersectResult();
+		return Intersections();
 	}
 
 	discriminant = sqrt(discriminant);
@@ -19,5 +20,5 @@ IntersectResult Sphere::intersect(const Ray& ray) const {
 	auto t1 = (-b - discriminant) / (2 * a);
 	auto t2 = (-b + discriminant) / (2 * a);
 
-	return IntersectResult{ t1, t2 };
+	return Intersections({ { t1, this }, { t2, this } });
 }

@@ -1,12 +1,8 @@
 ﻿#include "pch.h"
 #include "Raycaster.h"
-//#include <cmath>
-//#include <vector>
-
 #include "Utils.h"
 #include "Primitives/Sphere.h"
-//#include "Matrix.h"
-//#include "Tuple.h"
+#include "Intersection.h"
 
 /*
 Sceneario: Creating 2 spheres
@@ -78,9 +74,9 @@ TEST(Raysphere, RaySphereAt2Points) {
 
 	auto sphere = Sphere();
 	auto xs = ray.intersect(sphere);
-	EXPECT_EQ(xs.size(), 2);
-	EXPECT_TRUE(isEquald(xs[0], 4.0));
-	EXPECT_TRUE(isEquald(xs[1], 6.0));
+	EXPECT_EQ(xs.count(), 2);
+	EXPECT_TRUE(isEquald(xs[0].m_t, 4.0));
+	EXPECT_TRUE(isEquald(xs[1].m_t, 6.0));
 }
 
 /*
@@ -99,9 +95,9 @@ TEST(Raysphere, RaySphereAtTangent) {
 
 	auto sphere = Sphere();
 	auto xs = ray.intersect(sphere);
-	EXPECT_EQ(xs.size(), 2);
-	EXPECT_TRUE(isEquald(xs[0], 5.0));
-	EXPECT_TRUE(isEquald(xs[1], 5.0));
+	EXPECT_EQ(xs.count(), 2);
+	EXPECT_TRUE(isEquald(xs[0].m_t, 5.0));
+	EXPECT_TRUE(isEquald(xs[1].m_t, 5.0));
 }
 
 /*
@@ -118,7 +114,7 @@ TEST(Raysphere, RaySphereMiss) {
 
 	auto sphere = Sphere();
 	auto xs = ray.intersect(sphere);
-	EXPECT_EQ(xs.size(), 0);
+	EXPECT_EQ(xs.count(), 0);
 }
 
 /*
@@ -137,9 +133,9 @@ TEST(Raysphere, RayInsideSphere) {
 
 	auto sphere = Sphere();
 	auto xs = ray.intersect(sphere);
-	EXPECT_EQ(xs.size(), 2);
-	EXPECT_TRUE(isEquald(xs[0], -1.0));
-	EXPECT_TRUE(isEquald(xs[1], 1.0));
+	EXPECT_EQ(xs.count(), 2);
+	EXPECT_TRUE(isEquald(xs[0].m_t, -1.0));
+	EXPECT_TRUE(isEquald(xs[1].m_t, 1.0));
 }
 
 /*
@@ -158,7 +154,151 @@ TEST(Raysphere, RayInFrontSphere) {
 
 	auto sphere = Sphere();
 	auto xs = ray.intersect(sphere);
-	EXPECT_EQ(xs.size(), 2);
-	EXPECT_TRUE(isEquald(xs[0], -6.0));
-	EXPECT_TRUE(isEquald(xs[1], -4.0));
+	EXPECT_EQ(xs.count(), 2);
+	EXPECT_TRUE(isEquald(xs[0].m_t, -6.0));
+	EXPECT_TRUE(isEquald(xs[1].m_t, -4.0));
+}
+
+/*
+Scenario: An intersection encapsulates t and object
+Given s ← sphere()
+When i ← intersection(3.5, s)
+Then i.t = 3.5
+And i.object = s
+*/
+TEST(Raysphere, IntersectionClass) {
+	auto sphere = Sphere();
+	auto i = Intersection{ 3.5, &sphere };
+	EXPECT_EQ(i.m_t, 3.5);
+	EXPECT_EQ(&sphere, i.m_object);
+}
+
+/*
+Scenario: Aggregating intersections Given s ← sphere()
+And i1 ← intersection(1, s)
+And i2 ← intersection(2, s)
+When xs ← intersections(i1, i2)
+Then xs.count = 2
+And xs[0].t = 1
+And xs[1].t = 2
+*/
+TEST(Raysphere, IntersectionAggregate) {
+	auto sphere = Sphere();
+	auto i1 = Intersection{ 1, &sphere };
+	auto i2 = Intersection{ 2, &sphere };
+
+	auto intersections = Intersections({ i1, i2 });
+	EXPECT_EQ(intersections.count(), 2);
+
+	auto first = intersections.get(0);
+	EXPECT_TRUE(first);
+	EXPECT_EQ(first->m_t, 1);
+
+	auto second = intersections.get(1);
+	EXPECT_TRUE(second);
+	EXPECT_EQ(second->m_t, 2);
+}
+
+/*
+Scenario: Intersect sets the object on the intersection 
+Given r ← ray(point(0, 0, -5), vector(0, 0, 1))
+And s ← sphere()
+When xs ← intersect(s, r)
+Then xs.count = 2
+And xs[0].object = s 
+And xs[1].object = s
+*/
+TEST(Raysphere, IntersecSetsObject) {
+	auto origin = Tuple::CreatePoint(0, 0, -5);
+	auto direction = Tuple::CreateVector(0, 0, 1);
+	auto ray = Ray(origin, direction);
+
+	auto sphere = Sphere();
+	auto xs = ray.intersect(sphere);
+
+	EXPECT_EQ(xs.count(), 2);
+	EXPECT_EQ(xs[0].m_object, &sphere);
+	EXPECT_EQ(xs[1].m_object, &sphere);
+}
+
+/*
+Scenario: The hit, when all intersections have positive t
+Given s ← sphere()
+And i1 ← intersection(1, s)
+And i2 ← intersection(2, s)
+And xs ← intersections(i2, i1)
+When i ← hit(xs) Then i = i1
+*/
+TEST(Raysphere, HitAllPositive) {
+	auto sphere = Sphere();
+	
+	auto i1 = Intersection{ 1, &sphere };
+	auto i2 = Intersection{ 2, &sphere };
+
+	auto xs = Intersections({ i2, i1 });
+	auto i = xs.hit();
+	EXPECT_EQ(i.value(), i1);
+}
+
+/*
+Scenario: The hit, when some intersections have negative t
+Given s ← sphere()
+And i1 ← intersection(-1, s)
+And i2 ← intersection(1, s) 
+And xs ← intersections(i2, i1)
+When i ← hit(xs) Then i = i2
+*/
+TEST(Raysphere, HitSomeNegative) {
+	auto sphere = Sphere();
+
+	auto i1 = Intersection{ -1, &sphere };
+	auto i2 = Intersection{ 1, &sphere };
+
+	auto xs = Intersections({ i2, i1 });
+	auto i = xs.hit();
+	EXPECT_EQ(i.value(), i2);
+}
+
+/*
+Scenario: The hit, when all intersections have negative t
+Given s ← sphere()
+And i1 ← intersection(-2, s)
+And i2 ← intersection(-1, s)
+And xs ← intersections(i2, i1)
+When i ← hit(xs)
+Then i is nothing
+*/
+TEST(Raysphere, HitAllNegative) {
+	auto sphere = Sphere();
+
+	auto i1 = Intersection{ -2, &sphere };
+	auto i2 = Intersection{ -1, &sphere };
+
+	auto xs = Intersections({ i2, i1 });
+	auto i = xs.hit();
+	EXPECT_FALSE(i);
+}
+
+/*
+Scenario: The hit is always the lowest nonnegative intersection
+Given s ← sphere()
+And i1 ← intersection(5, s)
+And i2 ← intersection(7, s)
+And i3 ← intersection(-3, s)
+And i4 ← intersection(2, s)
+And xs ← intersections(i1, i2, i3, i4)
+When i ← hit(xs) Then i = i4
+*/
+TEST(Raysphere, HitLowestNonnegative) {
+	auto sphere = Sphere();
+
+	auto i1 = Intersection{ 5, &sphere };
+	auto i2 = Intersection{ 7, &sphere };
+	auto i3 = Intersection{ -3, &sphere };
+	auto i4 = Intersection{ 2, &sphere };
+
+	auto xs = Intersections({ i1, i2, i3, i4 });
+	auto i = xs.hit();
+	EXPECT_EQ(i.value(), i4);
+
 }
