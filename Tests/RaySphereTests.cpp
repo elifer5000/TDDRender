@@ -341,7 +341,8 @@ Given s ← sphere()
 Then s.transform = identity_matrix
 */
 TEST(Raysphere, SetSphereTransform) {
-	EXPECT_TRUE(false);
+	auto s = Sphere();
+	EXPECT_TRUE(s.getTransform().isEqual(Matrix4().identity()));
 }
 /*
 Scenario: Changing a sphere's transformation
@@ -351,7 +352,10 @@ When set_transform(s, t)
 Then s.transform = t
 */
 TEST(Raysphere, ChangeSphereTransform) {
-	EXPECT_TRUE(false);
+	auto s = Sphere();
+	auto t = Transforms::MakeTranslation(2, 3, 4);
+	s.setTransform(t);
+	EXPECT_TRUE(s.getTransform().isEqual(t));
 }
 
 /*

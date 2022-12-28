@@ -3,10 +3,9 @@
 #include "Export.h"
 #include "Tuple.h"
 #include "Intersection.h"
+#include "Matrix4decl.h"
 
 class Object;
-template<int, int> class Matrix; 
-using Matrix4 = Matrix<4, 4>;
 
 class RAYTRACER_DECLSPEC Ray {
 public:

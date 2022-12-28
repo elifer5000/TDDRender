@@ -231,6 +231,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Intersection.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Matrix4decl.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Primitives\Object.h" />
     <ClInclude Include="Primitives\Sphere.h" />
