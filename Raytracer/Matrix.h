@@ -11,6 +11,7 @@ typedef std::vector<std::vector<double>> InitVector;
 template<int ROWS, int COLS> class Matrix {
 public:
 	Matrix() {
+		static_assert(ROWS > 0 && COLS > 0, "No zero sized matrix");
 		identity();
 	}
 
@@ -72,7 +73,7 @@ public:
 		return *this;
 	}
 
-	bool isEqual(const Matrix<ROWS, COLS>& other) {
+	bool isEqual(const Matrix<ROWS, COLS>& other) const {
 		for (int r = 0; r < ROWS; r++) {
 			for (int c = 0; c < COLS; c++) {
 				if (!isEquald(at(r, c), other.at(r, c))) {
@@ -93,7 +94,7 @@ public:
 		return *this;
 	}
 
-	Matrix<ROWS, COLS> operator*(const Matrix<ROWS, COLS>& rhs) {
+	Matrix<ROWS, COLS> operator*(const Matrix<ROWS, COLS>& rhs) const {
 		Matrix<ROWS, COLS> res;
 
 		for (int r = 0; r < ROWS; r++) {
@@ -110,7 +111,7 @@ public:
 		return res;
 	}
 
-	Tuple operator*(const Tuple& rhs) {
+	Tuple operator*(const Tuple& rhs) const {
 		Tuple res;
 		for (int r = 0; r < ROWS; r++) {
 			res[r] = at(r, 0) * rhs.x() + at(r, 1) * rhs.y() +
@@ -241,10 +242,6 @@ using Matrix3 = Matrix<3, 3>;
 using Matrix2 = Matrix<2, 2>;
 using Matrix4 = Matrix<4, 4>;
 
-template<> double Matrix2::determinant() const {
-	return at(0, 0) * at(1, 1) - at(0, 1) * at(1, 0);
-}
-
 namespace Transforms {
 	Matrix4 RAYTRACER_DECLSPEC MakeTranslation(double x, double y, double z);
 	Matrix4 RAYTRACER_DECLSPEC MakeScale(double x, double y, double z);
@@ -254,42 +251,46 @@ namespace Transforms {
 	Matrix4 RAYTRACER_DECLSPEC MakeShear(double xy, double xz, double yx, double yz, double zx, double zy);
 }
 
-template<> Matrix4& Matrix4::translate(double x, double y, double z) {
+template<> inline double Matrix2::determinant() const {
+	return at(0, 0) * at(1, 1) - at(0, 1) * at(1, 0);
+}
+
+template<> inline Matrix4& Matrix4::translate(double x, double y, double z) {
 	auto m = Transforms::MakeTranslation(x, y, z);
 	*this = m * (*this);
 
 	return *this;
 }
 
-template<> Matrix4& Matrix4::scale(double x, double y, double z) {
+template<> inline Matrix4& Matrix4::scale(double x, double y, double z) {
 	auto m = Transforms::MakeScale(x, y, z);
 	*this = m * (*this);
 
 	return *this;
 }
 
-template<> Matrix4& Matrix4::rotateX(double rad) {
+template<> inline Matrix4& Matrix4::rotateX(double rad) {
 	auto m = Transforms::MakeRotateX(rad);
 	*this = m * (*this);
 
 	return *this;
 }
 
-template<> Matrix4& Matrix4::rotateY(double rad) {
+template<> inline Matrix4& Matrix4::rotateY(double rad) {
 	auto m = Transforms::MakeRotateY(rad);
 	*this = (*this) * m;
 
 	return *this;
 }
 
-template<> Matrix4& Matrix4::rotateZ(double rad) {
+template<> inline Matrix4& Matrix4::rotateZ(double rad) {
 	auto m = Transforms::MakeRotateZ(rad);
 	*this = (*this) * m;
 
 	return *this;
 }
 
-template<> Matrix4& Matrix4::shear(double xy, double xz, double yx, double yz, double zx, double zy) {
+template<> inline Matrix4& Matrix4::shear(double xy, double xz, double yx, double yz, double zx, double zy) {
 	auto m = Transforms::MakeShear(xy, xz, yx, yz, zx, zy);
 	*this = (*this) * m;
 

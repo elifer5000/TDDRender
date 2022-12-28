@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include "Primitives/Sphere.h"
 #include "Intersection.h"
+#include "Matrix.h"
 
 /*
 Sceneario: Creating 2 spheres
@@ -300,5 +301,83 @@ TEST(Raysphere, HitLowestNonnegative) {
 	auto xs = Intersections({ i1, i2, i3, i4 });
 	auto i = xs.hit();
 	EXPECT_EQ(i.value(), i4);
+}
 
+/*
+Scenario: Translating a ray
+Given r ← ray(point(1, 2, 3),vector(0, 1, 0))
+And m ← translation(3, 4, 5)
+When r2 ← transform(r, m)
+Then r2.origin = point(4, 6, 8)
+And r2.direction = vector(0, 1, 0)
+*/
+TEST(Raysphere, RayTranslate) {
+	auto ray = Ray(Tuple::CreatePoint(1, 2, 3), Tuple::CreateVector(0, 1, 0));
+	auto m = Transforms::MakeTranslation(3, 4, 5);
+	auto ray2 = ray.transform(m);
+	EXPECT_TRUE(ray2.m_origin.isEqual(Tuple::CreatePoint(4, 6, 8)));
+	EXPECT_TRUE(ray2.m_direction.isEqual(Tuple::CreateVector(0, 1, 0)));
+}
+
+/*
+Scenario: Scaling a ray
+Given r ← ray(point(1, 2, 3), vector(0, 1, 0))
+And m ← scaling(2, 3, 4)
+When r2 ← transform(r, m)
+Then r2.origin = point(2, 6, 12)
+And r2.direction = vector(0, 3, 0)
+*/
+TEST(Raysphere, RayScaling) {
+	auto ray = Ray(Tuple::CreatePoint(1, 2, 3), Tuple::CreateVector(0, 1, 0));
+	auto m = Transforms::MakeScale(2, 3, 4);
+	auto ray2 = ray.transform(m);
+	EXPECT_TRUE(ray2.m_origin.isEqual(Tuple::CreatePoint(2, 6, 12)));
+	EXPECT_TRUE(ray2.m_direction.isEqual(Tuple::CreateVector(0, 3, 0)));
+}
+
+/*
+Scenario: A sphere's default transformation
+Given s ← sphere()
+Then s.transform = identity_matrix
+*/
+TEST(Raysphere, SetSphereTransform) {
+	EXPECT_TRUE(false);
+}
+/*
+Scenario: Changing a sphere's transformation
+Given s ← sphere()
+And t ← translation(2, 3, 4)
+When set_transform(s, t)
+Then s.transform = t
+*/
+TEST(Raysphere, ChangeSphereTransform) {
+	EXPECT_TRUE(false);
+}
+
+/*
+Scenario: Intersecting a scaled sphere with a ray
+Given r ← ray(point(0, 0, -5), vector(0, 0, 1))
+And s ← sphere()
+When set_transform(s, scaling(2, 2, 2))
+Transforming Rays and Spheres • 69
+And xs ← intersect(s, r)
+Then xs.count = 2
+And xs[0].t = 3
+And xs[1].t = 7
+*/
+TEST(Raysphere, IntersectScaledSphereWithRay) {
+	EXPECT_TRUE(false);
+
+}
+
+/*
+Scenario: Intersecting a translated sphere with a ray
+Given r ← ray(point(0, 0, -5), vector(0, 0, 1))
+And s ← sphere()
+When set_transform(s, translation(5, 0, 0))
+And xs ← intersect(s, r)
+Then xs.count = 0
+*/
+TEST(Raysphere, IntersectTranslatedSphereWithRay) {
+	EXPECT_TRUE(false);
 }
