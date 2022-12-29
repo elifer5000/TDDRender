@@ -363,15 +363,19 @@ Scenario: Intersecting a scaled sphere with a ray
 Given r ← ray(point(0, 0, -5), vector(0, 0, 1))
 And s ← sphere()
 When set_transform(s, scaling(2, 2, 2))
-Transforming Rays and Spheres • 69
 And xs ← intersect(s, r)
 Then xs.count = 2
 And xs[0].t = 3
 And xs[1].t = 7
 */
 TEST(Raysphere, IntersectScaledSphereWithRay) {
-	EXPECT_TRUE(false);
-
+	auto ray = Ray(Tuple::CreatePoint(0, 0, -5), Tuple::CreateVector(0, 0, 1));
+	auto s = Sphere();
+	s.setTransform(Transforms::MakeScale(2, 2, 2));
+	auto xs = ray.intersect(s);
+	EXPECT_EQ(xs.count(), 2);
+	EXPECT_EQ(xs[0].m_t, 3);
+	EXPECT_EQ(xs[1].m_t, 7);
 }
 
 /*
@@ -383,5 +387,9 @@ And xs ← intersect(s, r)
 Then xs.count = 0
 */
 TEST(Raysphere, IntersectTranslatedSphereWithRay) {
-	EXPECT_TRUE(false);
+	auto ray = Ray(Tuple::CreatePoint(0, 0, -5), Tuple::CreateVector(0, 0, 1));
+	auto s = Sphere();
+	s.setTransform(Transforms::MakeTranslation(5, 0, 0));
+	auto xs = ray.intersect(s);
+	EXPECT_EQ(xs.count(), 0);
 }

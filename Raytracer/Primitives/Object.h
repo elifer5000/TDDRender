@@ -7,6 +7,7 @@
 class RAYTRACER_DECLSPEC Object {
 	inline static int s_idCounter = 0;
 	int m_id;
+protected:
 	Matrix4 m_transform;
 public:
 	Object() {

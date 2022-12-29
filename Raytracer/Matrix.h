@@ -178,7 +178,7 @@ public:
 		return _minor;
 	}
 
-	Matrix<ROWS, COLS> inverse() {
+	Matrix<ROWS, COLS> inverse() const {
 		double det = determinant();
 		if (isEquald(det, 0)) {
 			// Another option: return empty matrix

@@ -208,11 +208,13 @@
   <ItemGroup>
     <ClCompile Include="Chapter2\projectile.cpp" />
     <ClCompile Include="Chapter4\DrawClock.cpp" />
+    <ClCompile Include="Chapter5\DrawSphere.cpp" />
     <ClCompile Include="ConsoleTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chapter2\projectile.h" />
     <ClInclude Include="Chapter4\DrawClock.h" />
+    <ClInclude Include="Chapter5\DrawSphere.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Raytracer\Raytracer.vcxproj">

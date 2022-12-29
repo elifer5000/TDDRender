@@ -25,7 +25,7 @@ void Intersections::add(const Intersection& intersection) {
 }
 
 const std::optional<Intersection> Intersections::get(int at) const {
-	if (at < 0 || at > m_intersections.size() - 1) {
+	if (at < 0 || at > (int)m_intersections.size() - 1) {
 		return std::nullopt;
 	}
 	return { m_intersections[at] };

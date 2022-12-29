@@ -3,10 +3,13 @@
 #include <vector>
 
 Intersections Sphere::intersect(const Ray& ray) const {
+	// Instead of transforming the sphere, we inverse transform the ray, since it's equivalent
+	//TODO: See if this should be generalized for all objects (Maybe done in Intersection.cpp)
+	auto invRay = ray.transform(m_transform.inverse());
 	// Vector from sphere center to ray origin
-	auto sphereToRayVec = ray.m_origin - Tuple::CreatePoint(0, 0, 0);
-	auto a = ray.m_direction.dot(ray.m_direction);
-	auto b = 2 * ray.m_direction.dot(sphereToRayVec);
+	auto sphereToRayVec = invRay.m_origin - Tuple::CreatePoint(0, 0, 0);
+	auto a = invRay.m_direction.dot(invRay.m_direction);
+	auto b = 2 * invRay.m_direction.dot(sphereToRayVec);
 	auto c = sphereToRayVec.dot(sphereToRayVec) - 1;
 
 	auto discriminant = b * b - 4 * a * c;

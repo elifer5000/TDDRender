@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Chapter4">
       <UniqueIdentifier>{b2f3892e-4bde-4d79-bfff-7ebddd2cc243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Chapter5">
+      <UniqueIdentifier>{ec831b9e-624a-4905-9a1b-5d3b76794b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Chapter5">
+      <UniqueIdentifier>{38e2be66-c190-4bdb-8fd2-7a162b349561}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleTests.cpp">
@@ -36,6 +42,9 @@
     <ClCompile Include="Chapter4\DrawClock.cpp">
       <Filter>Source Files\Chapter4</Filter>
     </ClCompile>
+    <ClCompile Include="Chapter5\DrawSphere.cpp">
+      <Filter>Source Files\Chapter5</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chapter2\projectile.h">
@@ -43,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="Chapter4\DrawClock.h">
       <Filter>Header Files\Chapter4</Filter>
+    </ClInclude>
+    <ClInclude Include="Chapter5\DrawSphere.h">
+      <Filter>Header Files\Chapter5</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,9 +2,15 @@
 //
 #include "Chapter2/projectile.h"
 #include "Chapter4/DrawClock.h"
+#include "Chapter5/DrawSphere.h"
 
 int main()
 {
-    ThrowProjectile();
+    /*
+    * Run the different end-of-chapters exercises
+    */
+
+    //ThrowProjectile();
     //DrawClock();
+    DrawSphere();
 }
