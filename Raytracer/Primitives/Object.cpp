@@ -10,6 +10,10 @@ const Matrix4& Object::getTransform() const {
 	return m_transform;
 }
 
+Matrix4 Object::getTransform() {
+	return m_transform;
+}
+
 void Object::setTransform(const Matrix4& m) {
 	m_transform = m;
 }

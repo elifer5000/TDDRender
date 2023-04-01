@@ -25,3 +25,12 @@ Intersections Sphere::intersect(const Ray& ray) const {
 
 	return Intersections({ { t1, this }, { t2, this } });
 }
+
+Tuple Sphere::normalAt(const Tuple& point) const {
+	Matrix4 inverse = getTransform().inverse();
+	auto objectPoint = inverse * point;
+	auto normal = objectPoint - Tuple::CreatePoint();
+	auto worldNormal = inverse.transpose() * normal;
+	worldNormal.w() = 0;
+	return worldNormal.normalize();
+}

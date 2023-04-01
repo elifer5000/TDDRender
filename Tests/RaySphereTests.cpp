@@ -13,11 +13,16 @@ Then s1.id = 1
 And s2.id = 2
 */
 TEST(Raysphere, SpheresId) {
+	// Because the current id might change according to other tests,
+	// we need to see what the current id is.
+	auto base = Sphere();
+	auto baseId = base.id();
+
 	auto s1 = Sphere();
 	auto s2 = Sphere();
 
-	EXPECT_EQ(s1.id(), 0);
-	EXPECT_EQ(s2.id(), 1);
+	EXPECT_EQ(s1.id(), baseId + 1);
+	EXPECT_EQ(s2.id(), baseId + 2);
 }
 
 /*

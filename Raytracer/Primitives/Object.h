@@ -20,7 +20,11 @@ public:
 
 	const Matrix4& getTransform() const;
 
+	Matrix4 getTransform();
+
 	void setTransform(const Matrix4& m);
 
 	virtual Intersections intersect(const Ray& ray) const;
+
+	virtual Tuple normalAt(const Tuple& point) const = 0;
 };
