@@ -59,7 +59,7 @@ TEST(Colors, ScalarColor) {
 	Color c(0.2f, 0.3f, 0.4f);
 	
 	Color expected(0.4f, 0.6f, 0.8f);
-	EXPECT_TRUE((c * 2.f).isEqual(expected));
+	EXPECT_TRUE((c * 2.0).isEqual(expected));
 }
 
 /*
@@ -72,7 +72,7 @@ TEST(Colors, MultiplyColors) {
 	Color c1(1.0f, 0.2f, 0.4f);
 	Color c2(0.9f, 1.f, 0.1f);
 
-	Color res = c1.hadamard_product(c2);
+	Color res = c1 * c2;
 	Color expected(0.9f, 0.2f, 0.04f);
 	EXPECT_TRUE(res.isEqual(expected));
 }

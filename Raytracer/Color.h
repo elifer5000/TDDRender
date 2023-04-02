@@ -25,7 +25,7 @@ public:
 	void setG(double g) { m_y = g; }
 	void setB(double b) { m_z = b; }
 
-	Color hadamard_product(const Color& rhs) {
+	Color operator*(const Color& rhs) const {
 		Color tmp(*this);
 		tmp.setR(r() * rhs.r());
 		tmp.setG(g() * rhs.g());
@@ -33,16 +33,17 @@ public:
 
 		return tmp;
 	}
-};
 
-//class RAYTRACER_DECLSPEC Color : public Tuple {
-//public:
-//	Color(double red, double green, double blue) : Tuple(red, green, blue, 0.f) {}
-//
-//    double& r() { return x; }
-//    double& g() { return y; }
-//    double& b() { return z; }
-//    const double& r() const { return x; }
-//    const double& g() const { return y; }
-//    const double& b() const { return z; }
-//};
+	Color operator*(double scalar) const {
+		Color tmp(*this);
+		tmp *= scalar;
+
+		return tmp;
+	}
+
+	Color& operator*=(double scalar) {
+		Tuple::operator*=(scalar);
+
+		return *this;
+	}
+};

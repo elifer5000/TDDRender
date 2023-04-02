@@ -64,6 +64,7 @@
   <ItemGroup>
     <ClCompile Include="ColorsTests.cpp" />
     <ClCompile Include="LightTest.cpp" />
+    <ClCompile Include="MaterialsTests.cpp" />
     <ClCompile Include="MatrixTests.cpp" />
     <ClCompile Include="RaySphereTests.cpp" />
     <ClCompile Include="TransformTests.cpp" />

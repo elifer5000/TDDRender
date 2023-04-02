@@ -17,3 +17,18 @@ Matrix4 Object::getTransform() {
 void Object::setTransform(const Matrix4& m) {
 	m_transform = m;
 }
+
+const Material& Object::getMaterial() const
+{
+	return m_material;
+}
+
+Material Object::getMaterial()
+{
+	return m_material;
+}
+
+void Object::setMaterial(const Material& m)
+{
+	m_material = m;
+}

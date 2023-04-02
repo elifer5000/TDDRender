@@ -2,6 +2,7 @@
 #include "../Export.h"
 #include "../Raycaster.h"
 #include "../Matrix.h"
+#include "../Material.h"
 
 // Base object class for primitives (and maybe more?)
 class RAYTRACER_DECLSPEC Object {
@@ -9,6 +10,7 @@ class RAYTRACER_DECLSPEC Object {
 	int m_id;
 protected:
 	Matrix4 m_transform;
+	Material m_material;
 public:
 	Object() {
 		m_id = s_idCounter++;
@@ -19,10 +21,12 @@ public:
 	}
 
 	const Matrix4& getTransform() const;
-
 	Matrix4 getTransform();
-
 	void setTransform(const Matrix4& m);
+
+	const Material& getMaterial() const;
+	Material getMaterial();
+	void setMaterial(const Material& m);
 
 	virtual Intersections intersect(const Ray& ray) const;
 

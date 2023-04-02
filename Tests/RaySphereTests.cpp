@@ -398,3 +398,32 @@ TEST(Raysphere, IntersectTranslatedSphereWithRay) {
 	auto xs = ray.intersect(s);
 	EXPECT_EQ(xs.count(), 0);
 }
+
+/*
+Scenario: A sphere has a default material
+Given s ← sphere()
+When m ← s.material
+Then m = material()
+*/
+TEST(Raysphere, SphereDefaultMaterial) {
+	auto s = Sphere();
+	auto m = s.getMaterial();
+
+	EXPECT_EQ(m, Material());
+}
+
+/*
+Scenario: A sphere may be assigned a material 
+Given s ← sphere()
+And m ← material()
+And m.ambient ← 1 
+When s.material ← m 
+Then s.material = m
+*/
+TEST(Raysphere, SphereMaterialAssign) {
+	auto s = Sphere();
+	auto m = Material();
+	m.m_ambient = 1;
+	s.setMaterial(m);
+	EXPECT_EQ(s.getMaterial(), m);
+}

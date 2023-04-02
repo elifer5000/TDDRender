@@ -1,5 +1,7 @@
 ﻿#include "pch.h"
 #include "Primitives/Sphere.h"
+#include "Color.h"
+#include "Light.h"
 
 /*
 Scenario: The normal on a sphere at a point on the x axis
@@ -101,4 +103,21 @@ TEST(Light, NormalTransformedSphere) {
 	auto n = s.normalAt(Tuple::CreatePoint(0, sqrt(2) / 2, -sqrt(2) / 2));
 
 	EXPECT_TRUE(n.isEqual(Tuple::CreateVector(0, 0.97014, -0.24254)));
+}
+
+/*
+Scenario: A point light has a position and intensity
+Given intensity ← color(1, 1, 1)
+And position ← point(0, 0, 0)
+When light ← point_light(position, intensity) 
+Then light.position = position
+And light.intensity = intensity
+*/
+TEST(Light, PointLightInit) {
+	auto intensity = Color(1, 1, 1);
+	auto position = Tuple::CreatePoint(0, 0, 0);
+	auto light = PointLight(position, intensity);
+
+	EXPECT_TRUE(light.getPosition().isEqual(position));
+	EXPECT_TRUE(light.getIntensity().isEqual(intensity));
 }
