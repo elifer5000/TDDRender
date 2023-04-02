@@ -1,7 +1,9 @@
+#include <chrono>
 #include "DrawSphere.h"
 #include "Canvas.h"
 #include "Raycaster.h"
 #include "Primitives/Sphere.h"
+#include "Light.h"
 
 void DrawSphereMyMethod() {
     int w = 400, h = 400;
@@ -37,7 +39,7 @@ void DrawSphereMyMethod() {
 // Lantern --> sphere --> wall
 // We are projecting the sphere's shadow onto the wall
 void DrawSphereBookMethod() {
-    int canvasPx = 200;
+    int canvasPx = 400;
     Canvas canvas(canvasPx, canvasPx);
 
     // Ray starting point
@@ -50,10 +52,17 @@ void DrawSphereBookMethod() {
 
     double pixelSize = wallSize / canvasPx; // Units per pixel
     
+    // Light
+    auto light = PointLight(Tuple::CreatePoint(-10, 10, -10), Color(1, 1, 1));
+
+    // Sphere
     auto red = Color(1, 0, 0);
     auto sphere = Sphere();
+    Material material = sphere.getMaterial();
+    material.m_color = Color(1, 0.2, 1);
+    sphere.setMaterial(material);
 
-    sphere.setTransform(Transforms::MakeShear(1, 0, 0, 0, 0, 0) * Transforms::MakeScale(0.5, 1, 1));
+    //sphere.setTransform(Transforms::MakeShear(1, 0, 0, 0, 0, 0) * Transforms::MakeScale(0.5, 1, 1));
 
     for (int y = 0; y < canvasPx; y++) {
         for (int x = 0; x < canvasPx; x++) {
@@ -62,15 +71,23 @@ void DrawSphereBookMethod() {
             auto intersections = ray.intersect(sphere);
             auto hit = intersections.hit();
             if (hit && hit->m_object == &sphere) {
-                canvas.writePixel(x, y, red);
+                auto hitPoint = ray.position(hit->m_t);
+                auto normal = sphere.normalAt(hitPoint);
+                auto eye = -ray.m_direction;
+                auto c = lighting(sphere.getMaterial(), light, hitPoint, eye, normal);
+                canvas.writePixel(x, y, c);
             }
         }
     }
 
-    canvas.saveToPPM("sphere_notshaded");
+    canvas.saveToPPM("sphere_shaded");
 }
 
 void DrawSphere() {
+    auto start = std::chrono::steady_clock::now();
     //DrawSphereMyMethod();
     DrawSphereBookMethod();
+    auto end = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end - start;
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 }

@@ -12,6 +12,12 @@ Chapters finished:
 ---
 ## Progress report
 
+#### 2/Apr/2023 - First shaded light!
+
+After a bit of a hiatus, here it is in full Phong glory. Look at that specular beauty.
+
+![sphere_shaded](Screenshots/sphere_shaded.png)
+
 #### 29/Dec/2022 - First light!
 
 Ok, it's not much, just a flat disc that is actually a sphere, but it's the first step showing ray intersections.
