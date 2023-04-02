@@ -177,4 +177,8 @@ public:
 		return Tuple(x, y, z, 0.0);
 	}
 
+	// Reflect vector v with respect to normal
+	static Tuple Reflect(const Tuple& v, const Tuple& normal) {
+		return v - normal * 2 * v.dot(normal);
+	}
 };

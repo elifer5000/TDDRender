@@ -326,3 +326,35 @@ TEST(Tuples, CrossProduct) {
 	Tuple expectedOpposite = Tuple::CreateVector(1.f, -2.f, 1.f);
 	EXPECT_TRUE(b.cross(a).isEqual(expectedOpposite));
 }
+
+/*
+Scenario: Reflecting a vector approaching at 45°
+Given v ← vector(1, -1, 0)
+And n ← vector(0, 1, 0)
+When r ← reflect(v, n)
+Then r = vector(1, 1, 0)
+*/
+TEST(Tuples, VectorReflect) {
+	auto v = Tuple::CreateVector(1, -1, 0);
+	auto n = Tuple::CreateVector(0, 1, 0);
+
+	auto r = Tuple::Reflect(v, n);
+	auto expected = Tuple::CreateVector(1, 1, 0);
+	EXPECT_TRUE(r.isEqual(expected));
+}
+
+/*
+Scenario: Reflecting a vector off a slanted surface
+Given v ← vector(0, -1, 0)
+And n ← vector(√2/2, √2/2, 0)
+When r ← reflect(v, n)
+Then r = vector(1, 0, 0)
+*/
+TEST(Tuples, VectorReflectSlanted) {
+	auto v = Tuple::CreateVector(0, -1, 0);
+	auto n = Tuple::CreateVector(sqrt(2)/2, sqrt(2)/2, 0);
+
+	auto r = Tuple::Reflect(v, n);
+	auto expected = Tuple::CreateVector(1, 0, 0);
+	EXPECT_TRUE(r.isEqual(expected));
+}

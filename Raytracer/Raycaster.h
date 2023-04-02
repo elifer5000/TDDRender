@@ -21,6 +21,7 @@ public:
 	}
 
 	Intersections intersect(const Object& obj) const;
-
+	
+	// Returns a new transformed ray
 	Ray transform(const Matrix4& matrix) const;
 };

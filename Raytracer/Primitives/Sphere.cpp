@@ -31,6 +31,6 @@ Tuple Sphere::normalAt(const Tuple& point) const {
 	auto objectPoint = inverse * point;
 	auto normal = objectPoint - Tuple::CreatePoint();
 	auto worldNormal = inverse.transpose() * normal;
-	worldNormal.w() = 0;
+	worldNormal.w() = 0; // Hack to avoid problems arising from translation
 	return worldNormal.normalize();
 }
