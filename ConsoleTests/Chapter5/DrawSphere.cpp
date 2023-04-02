@@ -1,4 +1,5 @@
 #include <chrono>
+#include <omp.h>
 #include "DrawSphere.h"
 #include "Canvas.h"
 #include "Raycaster.h"
@@ -62,8 +63,9 @@ void DrawSphereBookMethod() {
     material.m_color = Color(1, 0.2, 1);
     sphere.setMaterial(material);
 
-    //sphere.setTransform(Transforms::MakeShear(1, 0, 0, 0, 0, 0) * Transforms::MakeScale(0.5, 1, 1));
+    sphere.setTransform(Transforms::MakeShear(1, 0, 0, 0, 0, 0) * Transforms::MakeScale(0.5, 1, 1));
 
+    #pragma omp parallel for num_threads(4) collapse(2)
     for (int y = 0; y < canvasPx; y++) {
         for (int x = 0; x < canvasPx; x++) {
             auto direction = Tuple::CreatePoint(x * pixelSize - half, half - y * pixelSize, wallZ) - rayOrigin;
