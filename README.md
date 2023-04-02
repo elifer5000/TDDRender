@@ -8,6 +8,7 @@ Chapters finished:
 3. Matrices
 4. Transforms
 5. Ray-Sphere Intersections
+6. Light and Shading
 
 ---
 ## Progress report
